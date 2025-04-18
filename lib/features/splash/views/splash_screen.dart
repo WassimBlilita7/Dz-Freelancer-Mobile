@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
 import 'package:wassit_freelancer_dz_flutter/features/splash/controllers/splash_controller.dart';
@@ -29,8 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Consumer<SplashProvider>(
         builder: (context, provider, child) {
           if (!provider.model.isLoading && mounted) {
-            // Delay navigation to ensure widget tree is fully built
-            Future.microtask(() {
+            Future.delayed(Duration.zero, () {
               if (mounted) {
                 Navigator.pushReplacementNamed(context, '/onboarding');
               }
@@ -39,8 +39,8 @@ class _SplashScreenState extends State<SplashScreen> {
           return Center(
             child: Image.asset(
               'assets/images/logo.png',
-              width: 200,
-              height: 200,
+              width: 200.w, // Taille responsive
+              height: 200.h,
             )
                 .animate()
                 .fadeIn(duration: 1000.ms)

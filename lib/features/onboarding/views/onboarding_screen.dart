@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
@@ -19,7 +20,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = OnboardingController(Provider.of<OnboardingProvider>(context, listen: false));
+    final provider = Provider.of<OnboardingProvider>(context, listen: false);
+    _controller = OnboardingController(provider);
   }
 
   @override
@@ -34,9 +36,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       backgroundColor: AppColors.getBackground(context),
       body: Consumer<OnboardingProvider>(
         builder: (context, provider, child) {
-          if (provider.isCompleted) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.pushReplacementNamed(context, '/home');
+          if (provider.isCompleted && mounted) {
+            Future.delayed(Duration.zero, () {
+              if (mounted) {
+                Navigator.pushReplacementNamed(context, '/home');
+              }
             });
           }
           return Stack(
@@ -50,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
               ),
               Positioned(
-                bottom: 80,
+                bottom: 80.h, // Taille responsive
                 left: 0,
                 right: 0,
                 child: Center(
@@ -60,20 +64,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     effect: WormEffect(
                       activeDotColor: AppColors.getPrimary(context),
                       dotColor: AppColors.getAccent(context).withOpacity(0.5),
+                      dotHeight: 8.h,
+                      dotWidth: 8.w,
                     ),
                   ),
                 ),
               ),
               Positioned(
-                top: 40,
-                right: 20,
+                top: 40.h, // Taille responsive
+                right: 20.w,
                 child: TextButton(
                   onPressed: _controller.skipOnboarding,
                   child: Text(
                     'Passer',
                     style: TextStyle(
                       color: AppColors.getText(context),
-                      fontSize: 16,
+                      fontSize: 16.sp, // Taille responsive
                     ),
                   ),
                 ),
@@ -85,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _controller.nextPage,
         backgroundColor: AppColors.getPrimary(context),
-        child: const Icon(Icons.arrow_forward, color: Colors.white),
+        child: Icon(Icons.arrow_forward, size: 24.w, color: Colors.white),
       ),
     );
   }
