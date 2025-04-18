@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'features/splash/providers/splash_provider.dart';
-import 'features/splash/views/splash_screen.dart';
-import 'features/onboarding/providers/onboarding_provider.dart';
-import 'features/onboarding/views/onboarding_screen.dart';
+import 'package:wassit_freelancer_dz_flutter/config/app_routes.dart';
+import 'package:wassit_freelancer_dz_flutter/features/splash/providers/splash_provider.dart';
+import 'package:wassit_freelancer_dz_flutter/features/onboarding/providers/onboarding_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,11 +26,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         initialRoute: '/splash',
-        routes: {
-          '/splash': (context) => const SplashScreen(),
-          '/onboarding': (context) => const OnboardingScreen(),
-          '/home': (context) => const Scaffold(body: Center(child: Text('Home Screen'))),
-        },
+        routes: AppRoutes.getRoutes(),
       ),
     );
   }
