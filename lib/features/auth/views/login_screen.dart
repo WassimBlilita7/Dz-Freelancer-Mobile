@@ -18,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   late LoginController _controller;
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -30,91 +30,182 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void _navigateToSignup() {
+    // TODO: Implémenter la navigation vers l'écran d'inscription
+    // Navigator.pushNamed(context, '/signup');
+  }
+
+  void _handleGoogleLogin() {
+    // TODO: Implémenter la connexion Google
+    print('Connexion Google');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Logo en arrière-plan avec opacité
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.1,
-              child: Image.asset(
-                'assets/images/logo.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          // Contenu principal
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
-              child: Consumer<LoginProvider>(
-                builder: (context, provider, child) {
-                  return Column(
+      backgroundColor: AppColors.getBackground(context),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
+          child: Consumer<LoginProvider>(
+            builder: (context, provider, child) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Logo
+                  Image.asset(
+                    'assets/images/logo.png',
+                    width: 80.w,
+                    height: 80.h,
+                    fit: BoxFit.contain,
+                  ).animate().fadeIn(duration: 800.ms),
+                  SizedBox(height: 20.h),
+                  // Titre
+                  Text(
+                    'Bienvenue de nouveau !',
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textDarkGrey,
+                    ),
+                  ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
+                  SizedBox(height: 8.h),
+                  // Sous-titre
+                  Text(
+                    'Connectez-vous à votre compte',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: AppColors.textLightGrey,
+                    ),
+                  ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
+                  SizedBox(height: 40.h),
+                  // Champ Nom d'utilisateur
+                  CustomTextField(
+                    label: 'Email',
+                    controller: _usernameController,
+                    keyboardType: TextInputType.text,
+                    onChanged: provider.updateEmail, // À ajuster si l'API utilise username
+                  ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 400.ms),
+                  SizedBox(height: 20.h),
+                  // Champ Mot de passe
+                  CustomTextField(
+                    label: 'Mot de passe',
+                    controller: _passwordController,
+                    isPassword: true,
+                    onChanged: provider.updatePassword,
+                  ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 500.ms),
+                  SizedBox(height: 30.h),
+                  // Bouton Se connecter
+                  provider.model.isLoading
+                      ? CircularProgressIndicator(
+                    color: AppColors.primaryBlue,
+                  )
+                      : GestureDetector(
+                    onTap: () => _controller.login(context),
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: 16.h),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryBlue,
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Text(
+                        'Se connecter',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ).animate().fadeIn(duration: 600.ms, delay: 600.ms),
+                  if (provider.model.errorMessage != null) ...[
+                    SizedBox(height: 20.h),
+                    Text(
+                      provider.model.errorMessage!,
+                      style: TextStyle(color: Colors.red, fontSize: 14.sp),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                  SizedBox(height: 30.h),
+                  // Bouton Se connecter avec Google
+                  GestureDetector(
+                    onTap: _handleGoogleLogin,
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: 16.h),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.r),
+                        border: Border.all(
+                          color: AppColors.primaryBlue,
+                          width: 1.w,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 8.r,
+                            offset: Offset(0, 2.h),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/icons/google.png',
+                            width: 24.w,
+                            height: 24.h,
+                          ),
+                          SizedBox(width: 10.w),
+                          Text(
+                            'Se connecter avec Google',
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              color: AppColors.primaryBlue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ).animate().fadeIn(duration: 600.ms, delay: 700.ms),
+                  SizedBox(height: 30.h),
+                  // Lien d'inscription
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Connexion',
+                        'Vous n\'avez pas de compte ? ',
                         style: TextStyle(
-                          fontSize: 28.sp,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.getText(context),
+                          fontSize: 14.sp,
+                          color: AppColors.textLightGrey,
                         ),
-                      ).animate().fadeIn(duration: 600.ms),
-                      SizedBox(height: 40.h),
-                      CustomTextField(
-                        label: 'Email',
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        onChanged: provider.updateEmail,
-                      ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms),
-                      SizedBox(height: 20.h),
-                      CustomTextField(
-                        label: 'Mot de passe',
-                        controller: _passwordController,
-                        isPassword: true,
-                        onChanged: provider.updatePassword,
-                      ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 200.ms),
-                      SizedBox(height: 30.h),
-                      provider.model.isLoading
-                          ? CircularProgressIndicator(
-                        color: AppColors.getPrimary(context),
-                      )
-                          : ElevatedButton(
-                        onPressed: () => _controller.login(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.getPrimary(context),
-                          padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 12.h),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      GestureDetector(
+                        onTap: _navigateToSignup,
+                        child: Text(
+                          'Inscrivez-vous ici',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: AppColors.primaryBlue,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        child: Text(
-                          'Se connecter',
-                          style: TextStyle(fontSize: 16.sp, color: Colors.white),
-                        ),
-                      ).animate().fadeIn(duration: 600.ms, delay: 400.ms),
-                      if (provider.model.errorMessage != null) ...[
-                        SizedBox(height: 20.h),
-                        Text(
-                          provider.model.errorMessage!,
-                          style: TextStyle(color: Colors.red, fontSize: 14.sp),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                      ),
                     ],
-                  );
-                },
-              ),
-            ),
+                  ).animate().fadeIn(duration: 600.ms, delay: 800.ms),
+                ],
+              );
+            },
           ),
-        ],
+        ),
       ),
     );
   }

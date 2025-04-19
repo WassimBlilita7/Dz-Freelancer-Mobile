@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppColors {
   // Light mode colors
@@ -29,4 +30,37 @@ class AppColors {
   static Color getAccent(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark ? accentDark : accentLight;
   }
+
+  static const bubbleColor1 = Color(0xFF42A5F5); // Bleu moderne
+  static const bubbleColor2 = Color(0xFFAB47BC); // Violet vibrant
+  static const bubbleColor3 = Color(0xFF26A69A); // Teal frais
+
+  // Dégradé pour le bouton
+  static const buttonGradient = LinearGradient(
+    colors: [bubbleColor1, bubbleColor2],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // Style pour la carte
+  static final cardBoxShadow = [
+    BoxShadow(
+      color: Colors.black.withOpacity(0.1),
+      blurRadius: 10.r,
+      offset: Offset(0, 5.h),
+    ),
+  ];
+
+  // Style pour l'ombre du logo
+  static final logoBoxShadow = [
+    BoxShadow(
+      color: Colors.black.withOpacity(0.2),
+      blurRadius: 8.r,
+      offset: Offset(0, 4.h),
+    ),
+  ];
+  static const primaryBlue = Color(0xFF1565C0); // Bleu pour le bouton et le lien
+  static const textDarkGrey = Color(0xFF333333); // Gris foncé pour le titre
+  static const textLightGrey = Color(0xFF666666); // Gris clair pour le sous-titre
+
 }
