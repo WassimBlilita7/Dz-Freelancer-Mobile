@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wassit_freelancer_dz_flutter/features/auth/views/login_screen.dart';
+import 'package:wassit_freelancer_dz_flutter/features/home/views/home_screen.dart';
 import 'package:wassit_freelancer_dz_flutter/features/splash/views/splash_screen.dart';
 import 'package:wassit_freelancer_dz_flutter/features/onboarding/views/onboarding_screen.dart';
 
@@ -7,7 +9,8 @@ class AppRoutes {
     return {
       '/splash': (context) => const SplashScreen(),
       '/onboarding': (context) => const OnboardingScreen(),
-      '/home': (context) => const Scaffold(body: Center(child: Text('Écran d\'accueil'))),
+      '/login': (context) => const LoginScreen(),
+      '/home': (context) => const HomeScreen(),
     };
   }
 }

@@ -39,7 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           if (provider.isCompleted && mounted) {
             Future.delayed(Duration.zero, () {
               if (mounted) {
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.pushReplacementNamed(context, '/login');
               }
             });
           }
@@ -54,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
               ),
               Positioned(
-                bottom: 80.h, // Taille responsive
+                bottom: 80.h,
                 left: 0,
                 right: 0,
                 child: Center(
@@ -71,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
               Positioned(
-                top: 40.h, // Taille responsive
+                top: 40.h,
                 right: 20.w,
                 child: TextButton(
                   onPressed: _controller.skipOnboarding,
@@ -79,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     'Passer',
                     style: TextStyle(
                       color: AppColors.getText(context),
-                      fontSize: 16.sp, // Taille responsive
+                      fontSize: 16.sp,
                     ),
                   ),
                 ),
