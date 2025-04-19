@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/config/app_routes.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
+import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/login_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/signup_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/providers/home_provider.dart';
@@ -32,14 +33,15 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp(
-            debugShowCheckedModeBanner: false,
             title: 'Wassit Freelancer DZ',
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primaryColor: AppColors.primaryBlue,
+              primaryColor: AppColors.primaryGreen,
               scaffoldBackgroundColor: AppColors.backgroundLight,
+              fontFamily: 'Poppins',
               textTheme: TextTheme(
-                bodyLarge: TextStyle(fontSize: 16.sp, color: AppColors.textDarkGrey),
-                bodyMedium: TextStyle(fontSize: 14.sp, color: AppColors.textLightGrey),
+                bodyLarge: AppTextStyles.inputText,
+                bodyMedium: AppTextStyles.subtitleMedium,
               ),
             ),
             initialRoute: '/',

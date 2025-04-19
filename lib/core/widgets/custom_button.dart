@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
 
 class CustomButton extends StatelessWidget {
   final String title;
@@ -51,11 +52,9 @@ class CustomButton extends StatelessWidget {
             ],
             Text(
               title,
-              style: TextStyle(
-                fontSize: 16.sp,
-                color: textColor,
-                fontWeight: FontWeight.w600,
-              ),
+              style: icon == null
+                  ? AppTextStyles.buttonText.copyWith(color: textColor)
+                  : AppTextStyles.otpKeyboardText.copyWith(color: textColor),
               textAlign: TextAlign.center,
             ),
           ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
+import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -41,10 +42,7 @@ class CustomTextField extends StatelessWidget {
             ],
             Text(
               label,
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: AppColors.textLightGrey,
-              ),
+              style: AppTextStyles.labelSmall,
             ),
           ],
         ),
@@ -54,21 +52,17 @@ class CustomTextField extends StatelessWidget {
           keyboardType: keyboardType,
           obscureText: obscureText,
           onChanged: onChanged,
-          style: TextStyle(
-            fontSize: 16.sp,
-            color: AppColors.textDarkGrey,
-          ),
+          style: AppTextStyles.inputText,
           decoration: InputDecoration(
             hintText: label,
-            hintStyle: TextStyle(
-              fontSize: 16.sp,
+            hintStyle: AppTextStyles.labelSmall.copyWith(
               color: AppColors.textLightGrey.withOpacity(0.5),
             ),
             filled: true,
-            fillColor: const Color(0xFFF5F5F5), // Fond gris clair
+            fillColor: const Color(0xFFF5F5F5),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
-              borderSide: const BorderSide(color: Color(0xFFE0E0E0)), // Bordure grise
+              borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),

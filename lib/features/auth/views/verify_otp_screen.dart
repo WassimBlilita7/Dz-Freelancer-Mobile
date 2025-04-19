@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
+import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_text_field.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_button.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/signup_provider.dart';
@@ -87,7 +88,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         controller: _otpControllers[index],
         focusNode: _focusNodes[index],
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 24.sp, color: AppColors.textDarkGrey),
+        style: AppTextStyles.otpInputText,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
@@ -162,20 +163,13 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         SizedBox(height: 20.h),
                         Text(
                           'Vérification du Code OTP',
-                          style: TextStyle(
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textDarkGrey,
-                          ),
+                          style: AppTextStyles.titleLarge,
                           textAlign: TextAlign.center,
                         ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
                         SizedBox(height: 8.h),
                         Text(
                           'Nous avons envoyé un code OTP à votre email\n$_email\nVeuillez entrer le code de 6 chiffres pour vérifier.',
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            color: AppColors.textLightGrey,
-                          ),
+                          style: AppTextStyles.subtitleMedium,
                           textAlign: TextAlign.center,
                         ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
                         SizedBox(height: 40.h),
@@ -187,7 +181,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           SizedBox(height: 20.h),
                           Text(
                             provider.model.errorMessage!,
-                            style: TextStyle(color: Colors.red, fontSize: 14.sp),
+                            style: AppTextStyles.errorText,
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -196,11 +190,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           onTap: _onResendTap,
                           child: Text(
                             'Vous n\'avez pas reçu le code ? Renvoyer l\'OTP',
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: AppColors.primaryGreen,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: AppTextStyles.linkSmall,
                           ),
                         ).animate().fadeIn(duration: 600.ms, delay: 500.ms),
                       ],

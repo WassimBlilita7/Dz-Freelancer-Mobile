@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
+import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
 import 'package:wassit_freelancer_dz_flutter/core/services/api_services.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_text_field.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_button.dart';
@@ -78,20 +79,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   ).animate().fadeIn(duration: 800.ms),
                   SizedBox(height: 20.h),
                   Text(
-                    'Créer un compte 📱',
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textDarkGrey,
-                    ),
+                    'Créer un compte',
+                    style: AppTextStyles.titleLarge,
                   ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
                   SizedBox(height: 8.h),
                   Text(
                     'Rejoignez Wassit Freelancer DZ !',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: AppColors.textLightGrey,
-                    ),
+                    style: AppTextStyles.subtitleMedium,
                   ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
                   SizedBox(height: 40.h),
                   CustomTextField(
@@ -152,10 +146,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       Text(
                         'Je suis un freelance',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.textLightGrey,
-                        ),
+                        style: AppTextStyles.labelSmall,
                       ),
                     ],
                   ).animate().fadeIn(duration: 600.ms, delay: 700.ms),
@@ -172,7 +163,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(height: 20.h),
                     Text(
                       provider.model.errorMessage!,
-                      style: TextStyle(color: Colors.red, fontSize: 14.sp),
+                      style: AppTextStyles.errorText,
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -182,20 +173,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     children: [
                       Text(
                         'Déjà un compte ? ',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.textLightGrey,
-                        ),
+                        style: AppTextStyles.labelSmall,
                       ),
                       GestureDetector(
                         onTap: _navigateToLogin,
                         child: Text(
                           'Connectez-vous ici',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.primaryGreen,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: AppTextStyles.linkSmall,
                         ),
                       ),
                     ],
