@@ -72,7 +72,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     if (otp.length == 6) {
       provider.controller?.verifyOtp(context, otp);
     } else {
-      provider.setError('Veuillez entrer un OTP complet de 6 chiffres');
+      provider.setError(context, 'Veuillez entrer un OTP complet de 6 chiffres');
     }
   }
 
@@ -177,14 +177,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: List.generate(6, (index) => _buildOtpField(index)),
                         ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 400.ms),
-                        if (provider.model.errorMessage != null) ...[
-                          SizedBox(height: 20.h),
-                          Text(
-                            provider.model.errorMessage!,
-                            style: AppTextStyles.errorText,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
                         SizedBox(height: 20.h),
                         GestureDetector(
                           onTap: _onResendTap,

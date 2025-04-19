@@ -22,12 +22,12 @@ class LoginController {
     final password = provider.model.password;
 
     if (email.isEmpty || password.isEmpty) {
-      provider.setError('Veuillez remplir tous les champs');
+      provider.setError(context, 'Veuillez remplir tous les champs');
       return;
     }
 
     if (!_isValidEmail(email)) {
-      provider.setError('Veuillez entrer un email valide');
+      provider.setError(context, 'Veuillez entrer un email valide');
       return;
     }
 
@@ -44,14 +44,14 @@ class LoginController {
       await prefs.setString('jwt-freelancerDZ', token);
       await prefs.setString('userData', jsonEncode(userData));
 
-      provider.setUserData(userData, token);
+      provider.setUserData(context, userData, token);
 
       if (context.mounted) {
         Navigator.pushReplacementNamed(context, '/home');
       }
     } catch (e) {
       provider.setLoading(false);
-      provider.setError(e.toString());
+      provider.setError(context, e.toString().replaceFirst('Exception: ', ''));
     }
   }
 }

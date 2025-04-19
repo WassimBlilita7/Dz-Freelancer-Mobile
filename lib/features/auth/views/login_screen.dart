@@ -3,8 +3,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
+import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
 import 'package:wassit_freelancer_dz_flutter/core/services/api_services.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_text_field.dart';
+import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_button.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/controllers/login_controller.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/login_provider.dart';
 
@@ -17,8 +19,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   late LoginController _controller;
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
 
   @override
   void initState() {
@@ -29,9 +32,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
   }
 
   void _navigateToSignup() {
@@ -64,67 +73,46 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 20.h),
                   Text(
                     'Bienvenue de nouveau !',
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textDarkGrey,
-                    ),
+                    style: AppTextStyles.titleLarge,
                   ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
                   SizedBox(height: 8.h),
                   Text(
                     'Connectez-vous à votre compte',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: AppColors.textLightGrey,
-                    ),
+                    style: AppTextStyles.subtitleMedium,
                   ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
                   SizedBox(height: 40.h),
                   CustomTextField(
                     label: 'Email',
-                    controller: _usernameController,
+                    controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     onChanged: provider.updateEmail,
+                    prefixIcon: Icons.email,
                   ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 400.ms),
                   SizedBox(height: 20.h),
                   CustomTextField(
                     label: 'Mot de passe',
                     controller: _passwordController,
                     isPassword: true,
+                    obscureText: !_isPasswordVisible,
                     onChanged: provider.updatePassword,
+                    prefixIcon: Icons.lock,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: AppColors.textLightGrey,
+                      ),
+                      onPressed: _togglePasswordVisibility,
+                    ),
                   ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 500.ms),
                   SizedBox(height: 30.h),
-                  provider.model.isLoading
-                      ? CircularProgressIndicator(
-                    color: AppColors.primaryBlue,
-                  )
-                      : GestureDetector(
+                  CustomButton(
+                    title: 'Se connecter',
                     onTap: () => _controller.login(context),
-                    child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(vertical: 16.h),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryGreen,
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Text(
-                        'Se connecter',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    backgroundColor: AppColors.primaryGreen,
+                    textColor: Colors.white,
+                    borderRadius: 24.0,
+                    isLoading: provider.model.isLoading,
                   ).animate().fadeIn(duration: 600.ms, delay: 600.ms),
-                  if (provider.model.errorMessage != null) ...[
-                    SizedBox(height: 20.h),
-                    Text(
-                      provider.model.errorMessage!,
-                      style: TextStyle(color: Colors.red, fontSize: 14.sp),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
                   SizedBox(height: 30.h),
                   GestureDetector(
                     onTap: _handleGoogleLogin,
@@ -135,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12.r),
                         border: Border.all(
-                          color: AppColors.primaryBlue,
+                          color: AppColors.primaryGreen,
                           width: 1.w,
                         ),
                         boxShadow: [
@@ -157,10 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(width: 10.w),
                           Text(
                             'Se connecter avec Google',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              color: AppColors.primaryBlue,
-                              fontWeight: FontWeight.w600,
+                            style: AppTextStyles.buttonText.copyWith(
+                              color: AppColors.primaryGreen,
                             ),
                           ),
                         ],
@@ -173,20 +159,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Text(
                         'Vous n\'avez pas de compte ? ',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.textLightGrey,
-                        ),
+                        style: AppTextStyles.labelSmall,
                       ),
                       GestureDetector(
                         onTap: _navigateToSignup,
                         child: Text(
-                          'Inscrivez-vous ici',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.primaryBlue,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          'Register',
+                          style: AppTextStyles.linkSmall,
                         ),
                       ),
                     ],

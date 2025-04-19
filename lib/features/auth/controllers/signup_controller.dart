@@ -31,28 +31,28 @@ class SignupController {
     final isFreelancer = provider.model.isFreelancer;
 
     if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      provider.setError('Veuillez remplir tous les champs');
+      provider.setError(context, 'Veuillez remplir tous les champs');
       return;
     }
 
     if (!_isValidUsername(username)) {
-      provider.setError('Le nom d\'utilisateur doit contenir entre 5 et 20 caractères');
+      provider.setError(context, 'Le nom d\'utilisateur doit contenir entre 5 et 20 caractères');
       return;
     }
 
     if (!_isValidEmail(email)) {
-      provider.setError('Veuillez entrer un email valide');
+      provider.setError(context, 'Veuillez entrer un email valide');
       return;
     }
 
     if (!_isValidPassword(password)) {
-      provider.setError(
+      provider.setError(context,
           'Le mot de passe doit contenir au moins 6 caractères, une majuscule, une minuscule et un chiffre');
       return;
     }
 
     if (password != confirmPassword) {
-      provider.setError('Les mots de passe ne correspondent pas');
+      provider.setError(context, 'Les mots de passe ne correspondent pas');
       return;
     }
 
@@ -60,7 +60,7 @@ class SignupController {
     try {
       await apiService.register(username, email, password, isFreelancer);
       provider.setLoading(false);
-      provider.setError(null);
+      provider.setSuccess(context, 'Inscription réussie ! Veuillez vérifier votre email.');
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('signupEmail', email);
@@ -70,7 +70,7 @@ class SignupController {
       }
     } catch (e) {
       provider.setLoading(false);
-      provider.setError(e.toString().replaceFirst('Exception: ', ''));
+      provider.setError(context, e.toString().replaceFirst('Exception: ', ''));
     }
   }
 
@@ -78,7 +78,7 @@ class SignupController {
     final email = provider.model.email;
 
     if (otp.isEmpty || !RegExp(r'^\d{6}$').hasMatch(otp)) {
-      provider.setError('L\'OTP doit être un code de 6 chiffres');
+      provider.setError(context, 'L\'OTP doit être un code de 6 chiffres');
       return;
     }
 
@@ -86,7 +86,7 @@ class SignupController {
     try {
       await apiService.verifyOTP(email, otp);
       provider.setLoading(false);
-      provider.setError(null);
+      provider.setSuccess(context, 'OTP vérifié avec succès !');
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove('signupEmail');
@@ -96,7 +96,7 @@ class SignupController {
       }
     } catch (e) {
       provider.setLoading(false);
-      provider.setError(e.toString().replaceFirst('Exception: ', ''));
+      provider.setError(context, e.toString().replaceFirst('Exception: ', ''));
     }
   }
 }

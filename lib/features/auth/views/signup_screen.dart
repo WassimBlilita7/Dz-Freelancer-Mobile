@@ -159,14 +159,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: 24.0,
                     isLoading: provider.model.isLoading,
                   ).animate().fadeIn(duration: 600.ms, delay: 800.ms),
-                  if (provider.model.errorMessage != null) ...[
-                    SizedBox(height: 20.h),
-                    Text(
-                      provider.model.errorMessage!,
-                      style: AppTextStyles.errorText,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
                   SizedBox(height: 30.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

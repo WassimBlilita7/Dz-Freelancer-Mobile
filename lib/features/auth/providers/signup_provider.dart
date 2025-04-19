@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wassit_freelancer_dz_flutter/core/utils/toast_utils.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/models/signup_model.dart';
 
 import '../controllers/signup_controller.dart';
@@ -45,8 +46,25 @@ class SignupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setError(String? errorMessage) {
+  void setError(BuildContext context, String? errorMessage) {
     _model = _model.copyWith(errorMessage: errorMessage);
+    if (errorMessage != null) {
+      ToastUtils.showToast(
+        context: context,
+        message: errorMessage,
+        isSuccess: false,
+      );
+    }
+    notifyListeners();
+  }
+
+  void setSuccess(BuildContext context, String successMessage) {
+    _model = _model.copyWith(errorMessage: null);
+    ToastUtils.showToast(
+      context: context,
+      message: successMessage,
+      isSuccess: true,
+    );
     notifyListeners();
   }
 

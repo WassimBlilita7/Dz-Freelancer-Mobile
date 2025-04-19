@@ -8,6 +8,8 @@ class AppColors {
   static const Color textLight = Color(0xFF212121); // Dark gray
   static const Color accentLight = Color(0xFFFFC107); // Amber
   static const Color primaryGreen = Color(0xFF2E9ACC);
+  static const Color errorRed = Color(0xFFE74C3C); // Rouge pour les erreurs
+  static const Color successGreen = Color(0xFF27AE60);
 
   // Dark mode colors
   static const Color primaryDark = Color(0xFF1976D2); // Darker blue
