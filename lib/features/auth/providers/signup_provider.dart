@@ -30,6 +30,11 @@ class SignupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateConfirmPassword(String confirmPassword) {
+    _model = _model.copyWith(confirmPassword: confirmPassword, errorMessage: null);
+    notifyListeners();
+  }
+
   void toggleFreelancer(bool isFreelancer) {
     _model = _model.copyWith(isFreelancer: isFreelancer, errorMessage: null);
     notifyListeners();

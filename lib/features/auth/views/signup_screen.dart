@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
 import 'package:wassit_freelancer_dz_flutter/core/services/api_services.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_text_field.dart';
+import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_button.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/controllers/signup_controller.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/signup_provider.dart';
 
@@ -20,13 +21,16 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
 
   @override
   void initState() {
     super.initState();
     final provider = Provider.of<SignupProvider>(context, listen: false);
     _controller = SignupController(provider, ApiService());
-    provider.controller = _controller; // Stocke le controller dans le provider
+    provider.controller = _controller;
   }
 
   @override
@@ -34,7 +38,20 @@ class _SignupScreenState extends State<SignupScreen> {
     _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
+  }
+
+  void _toggleConfirmPasswordVisibility() {
+    setState(() {
+      _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+    });
   }
 
   void _navigateToLogin() {
@@ -61,7 +78,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ).animate().fadeIn(duration: 800.ms),
                   SizedBox(height: 20.h),
                   Text(
-                    'Créer un compte',
+                    'Créer un compte 📱',
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.w600,
@@ -82,6 +99,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     controller: _usernameController,
                     keyboardType: TextInputType.text,
                     onChanged: provider.updateUsername,
+                    prefixIcon: Icons.person,
                   ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 400.ms),
                   SizedBox(height: 20.h),
                   CustomTextField(
@@ -89,14 +107,40 @@ class _SignupScreenState extends State<SignupScreen> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     onChanged: provider.updateEmail,
+                    prefixIcon: Icons.email,
                   ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 500.ms),
                   SizedBox(height: 20.h),
                   CustomTextField(
                     label: 'Mot de passe',
                     controller: _passwordController,
                     isPassword: true,
+                    obscureText: !_isPasswordVisible,
                     onChanged: provider.updatePassword,
+                    prefixIcon: Icons.lock,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: AppColors.textLightGrey,
+                      ),
+                      onPressed: _togglePasswordVisibility,
+                    ),
                   ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 600.ms),
+                  SizedBox(height: 20.h),
+                  CustomTextField(
+                    label: 'Confirmer le mot de passe',
+                    controller: _confirmPasswordController,
+                    isPassword: true,
+                    obscureText: !_isConfirmPasswordVisible,
+                    onChanged: provider.updateConfirmPassword,
+                    prefixIcon: Icons.lock,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: AppColors.textLightGrey,
+                      ),
+                      onPressed: _toggleConfirmPasswordVisibility,
+                    ),
+                  ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 650.ms),
                   SizedBox(height: 20.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -104,6 +148,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       Checkbox(
                         value: provider.model.isFreelancer,
                         onChanged: (value) => provider.toggleFreelancer(value ?? false),
+                        activeColor: AppColors.primaryGreen,
                       ),
                       Text(
                         'Je suis un freelance',
@@ -115,29 +160,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     ],
                   ).animate().fadeIn(duration: 600.ms, delay: 700.ms),
                   SizedBox(height: 30.h),
-                  provider.model.isLoading
-                      ? CircularProgressIndicator(
-                    color: AppColors.primaryBlue,
-                  )
-                      : GestureDetector(
+                  CustomButton(
+                    title: 'S\'inscrire',
                     onTap: () => _controller.register(context),
-                    child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(vertical: 16.h),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryBlue,
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Text(
-                        'S\'inscrire',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    backgroundColor: AppColors.primaryGreen,
+                    textColor: Colors.white,
+                    borderRadius: 24.0,
+                    isLoading: provider.model.isLoading,
                   ).animate().fadeIn(duration: 600.ms, delay: 800.ms),
                   if (provider.model.errorMessage != null) ...[
                     SizedBox(height: 20.h),
@@ -164,7 +193,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           'Connectez-vous ici',
                           style: TextStyle(
                             fontSize: 14.sp,
-                            color: AppColors.primaryBlue,
+                            color: AppColors.primaryGreen,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

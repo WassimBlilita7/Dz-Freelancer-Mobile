@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(vertical: 16.h),
                       decoration: BoxDecoration(
-                        color: AppColors.primaryBlue,
+                        color: AppColors.primaryGreen,
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Text(

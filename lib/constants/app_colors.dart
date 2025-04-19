@@ -7,6 +7,7 @@ class AppColors {
   static const Color backgroundLight = Color(0xFFFFFFFF); // White
   static const Color textLight = Color(0xFF212121); // Dark gray
   static const Color accentLight = Color(0xFFFFC107); // Amber
+  static const Color primaryGreen = Color(0xFF2E9ACC);
 
   // Dark mode colors
   static const Color primaryDark = Color(0xFF1976D2); // Darker blue

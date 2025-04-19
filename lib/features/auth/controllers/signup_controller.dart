@@ -27,9 +27,10 @@ class SignupController {
     final username = provider.model.username;
     final email = provider.model.email;
     final password = provider.model.password;
+    final confirmPassword = provider.model.confirmPassword;
     final isFreelancer = provider.model.isFreelancer;
 
-    if (username.isEmpty || email.isEmpty || password.isEmpty) {
+    if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       provider.setError('Veuillez remplir tous les champs');
       return;
     }
@@ -50,6 +51,11 @@ class SignupController {
       return;
     }
 
+    if (password != confirmPassword) {
+      provider.setError('Les mots de passe ne correspondent pas');
+      return;
+    }
+
     provider.setLoading(true);
     try {
       await apiService.register(username, email, password, isFreelancer);
@@ -57,7 +63,7 @@ class SignupController {
       provider.setError(null);
 
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('signupEmail', email); // Stocker l'email pour la vérification OTP
+      await prefs.setString('signupEmail', email);
 
       if (context.mounted) {
         Navigator.pushNamed(context, '/verify-otp');
