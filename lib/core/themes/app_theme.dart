@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static ThemeData lightTheme() {
     return FlexThemeData.light(
-      scheme: FlexScheme.deepBlue, // Base pour les autres couleurs
+      scheme: FlexScheme.deepBlue,
       surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
       blendLevel: 7,
-      appBarStyle: FlexAppBarStyle.primary,
-      appBarOpacity: 0.95,
+      appBarStyle: FlexAppBarStyle.custom,
+      appBarBackground: const Color(0xFFF8FAFC), // Blanc cassé comme base
+      appBarOpacity: 1.0, // Pas de transparence, on gérera le dégradé dans le widget
       subThemesData: const FlexSubThemesData(
         blendOnLevel: 10,
         blendOnColors: false,
@@ -18,11 +19,10 @@ class AppTheme {
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,
       swapLegacyOnMaterial3: true,
-      // Personnalisation des couleurs spécifiques
-      primary: const Color(0xFF6D28D9), // Violet foncé pour les icônes sélectionnées
-      secondary: const Color(0xFF6B7280), // Gris pour les icônes non sélectionnées
-      surface: const Color(0xFFFFFFFF), // Fond blanc pour la navbar
-      error: const Color(0xFFE74C3C), // errorRed
+      primary: const Color(0xFF6D28D9),
+      secondary: const Color(0xFF6B7280),
+      surface: const Color(0xFFFFFFFF),
+      error: const Color(0xFFE74C3C),
       fontFamily: 'Poppins',
     );
   }
@@ -32,8 +32,9 @@ class AppTheme {
       scheme: FlexScheme.deepBlue,
       surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
       blendLevel: 13,
-      appBarStyle: FlexAppBarStyle.primary,
-      appBarOpacity: 0.90,
+      appBarStyle: FlexAppBarStyle.custom,
+      appBarBackground: const Color(0xFF1E1E2F), // Gris anthracite comme base
+      appBarOpacity: 1.0, // Pas de transparence, on gérera le dégradé dans le widget
       subThemesData: const FlexSubThemesData(
         blendOnLevel: 20,
         navigationBarOpacity: 0.95,
@@ -42,11 +43,10 @@ class AppTheme {
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,
       swapLegacyOnMaterial3: true,
-      // Personnalisation des couleurs spécifiques
-      primary: const Color(0xFF6D28D9), // Violet foncé pour les icônes sélectionnées
-      secondary: const Color(0xFF6B7280), // Gris pour les icônes non sélectionnées
-      surface: const Color(0xFF1F2937), // Gris foncé pour le fond en mode sombre
-      error: const Color(0xFFE74C3C), // errorRed
+      primary: const Color(0xFF6D28D9),
+      secondary: const Color(0xFF6B7280),
+      surface: const Color(0xFF1F2937),
+      error: const Color(0xFFE74C3C),
       fontFamily: 'Poppins',
     );
   }
