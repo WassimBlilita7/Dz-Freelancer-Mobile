@@ -5,9 +5,9 @@ import 'package:wassit_freelancer_dz_flutter/core/widgets/animated_bottom_nav_ba
 import 'package:wassit_freelancer_dz_flutter/features/home/controllers/home_controller.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/providers/home_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/main/views/chart_tab.dart';
-import 'package:wassit_freelancer_dz_flutter/features/main/views/clock_tab.dart';
 import 'package:wassit_freelancer_dz_flutter/features/main/views/home_tab.dart';
 import 'package:wassit_freelancer_dz_flutter/features/main/views/notifications_tab.dart';
+import 'package:wassit_freelancer_dz_flutter/features/main/views/user_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _tabs = const [
     HomeTab(),
     ChartTab(),
-    ClockTab(),
+    UserTab(), // Remplace ClockTab par UserTab
     NotificationsTab(),
   ];
 

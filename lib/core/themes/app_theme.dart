@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static ThemeData lightTheme() {
     return FlexThemeData.light(
-      scheme: FlexScheme.deepBlue,
+      scheme: FlexScheme.deepBlue, // Base pour les autres couleurs
       surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
       blendLevel: 7,
       appBarStyle: FlexAppBarStyle.primary,
@@ -19,8 +19,9 @@ class AppTheme {
       useMaterial3: true,
       swapLegacyOnMaterial3: true,
       // Personnalisation des couleurs spécifiques
-      primary: const Color(0xFF1565C0), // primaryBlue
-      secondary: const Color(0xFF666666), // textLightGrey pour les éléments non sélectionnés
+      primary: const Color(0xFF6D28D9), // Violet foncé pour les icônes sélectionnées
+      secondary: const Color(0xFF6B7280), // Gris pour les icônes non sélectionnées
+      surface: const Color(0xFFFFFFFF), // Fond blanc pour la navbar
       error: const Color(0xFFE74C3C), // errorRed
       fontFamily: 'Poppins',
     );
@@ -42,8 +43,9 @@ class AppTheme {
       useMaterial3: true,
       swapLegacyOnMaterial3: true,
       // Personnalisation des couleurs spécifiques
-      primary: const Color(0xFF1565C0), // primaryBlue
-      secondary: const Color(0xFF666666), // textLightGrey pour les éléments non sélectionnés
+      primary: const Color(0xFF6D28D9), // Violet foncé pour les icônes sélectionnées
+      secondary: const Color(0xFF6B7280), // Gris pour les icônes non sélectionnées
+      surface: const Color(0xFF1F2937), // Gris foncé pour le fond en mode sombre
       error: const Color(0xFFE74C3C), // errorRed
       fontFamily: 'Poppins',
     );

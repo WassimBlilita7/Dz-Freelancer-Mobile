@@ -19,7 +19,7 @@ class AnimatedBottomNavBar extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       padding: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(
-        color: Theme.of(context).navigationBarTheme.backgroundColor ?? Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).colorScheme.surface, // Fond blanc ou gris foncé selon le thème
         borderRadius: BorderRadius.circular(30.r),
         boxShadow: [
           BoxShadow(
@@ -100,8 +100,8 @@ class _NavBarItemState extends State<NavBarItem> with SingleTickerProviderStateM
       widget.item.icon,
       size: 28.sp,
       color: widget.isSelected
-          ? Theme.of(context).colorScheme.primary
-          : Theme.of(context).colorScheme.secondary,
+          ? Theme.of(context).colorScheme.primary // Violet foncé pour l'icône sélectionnée
+          : Theme.of(context).colorScheme.secondary, // Gris pour les icônes non sélectionnées
     )
         .animate(controller: _controller)
         .scaleXY(
@@ -143,7 +143,7 @@ class _NavBarItemState extends State<NavBarItem> with SingleTickerProviderStateM
         height: 50.h,
         decoration: BoxDecoration(
           color: widget.isSelected
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.2)
+              ? Theme.of(context).colorScheme.primary.withOpacity(0.2) // Fond violet clair pour l'élément sélectionné
               : Colors.transparent,
           shape: BoxShape.circle,
         ),
