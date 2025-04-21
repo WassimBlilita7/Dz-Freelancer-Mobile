@@ -6,7 +6,7 @@ import 'package:wassit_freelancer_dz_flutter/features/home/controllers/home_cont
 import 'package:wassit_freelancer_dz_flutter/features/home/providers/home_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/main/views/chart_tab.dart';
 import 'package:wassit_freelancer_dz_flutter/features/main/views/home_tab.dart';
-import 'package:wassit_freelancer_dz_flutter/features/main/views/notifications_tab.dart';
+import 'package:wassit_freelancer_dz_flutter/features/main/views/search_tab.dart';
 import 'package:wassit_freelancer_dz_flutter/features/main/views/user_tab.dart';
 
 class HomeScreen extends StatefulWidget {

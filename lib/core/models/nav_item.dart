@@ -14,7 +14,7 @@ class NavItem {
       NavItem(icon: Icons.home, index: 0),
       NavItem(icon: Icons.pie_chart, index: 1),
       NavItem(icon: Icons.account_circle, index: 2),
-      NavItem(icon: Icons.notifications, index: 3),
+      NavItem(icon: Icons.search, index: 3),
     ];
   }
 }

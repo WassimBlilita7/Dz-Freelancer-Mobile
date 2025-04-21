@@ -9,7 +9,7 @@ class NotificationsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        'Notifications',
+        'Search 🔍',
         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
           color: Theme.of(context).colorScheme.onSurface,
         ),
