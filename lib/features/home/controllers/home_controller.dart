@@ -22,13 +22,14 @@ class HomeController {
 
       provider.setLoading(false);
       provider.clearError();
+      provider.setSuccess(context, 'Déconnexion réussie !');
 
       if (context.mounted) {
         Navigator.pushReplacementNamed(context, '/login');
       }
     } catch (e) {
       provider.setLoading(false);
-      provider.setError(e.toString());
+      provider.setError(context, e.toString().replaceFirst('Exception: ', ''));
     }
   }
 }

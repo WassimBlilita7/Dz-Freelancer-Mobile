@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/config/app_routes.dart';
-import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
-import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
+import 'package:wassit_freelancer_dz_flutter/core/themes/app_theme.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/login_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/signup_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/providers/home_provider.dart';
@@ -35,15 +34,9 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Wassit Freelancer DZ',
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primaryColor: AppColors.primaryGreen,
-              scaffoldBackgroundColor: AppColors.backgroundLight,
-              fontFamily: 'Poppins',
-              textTheme: TextTheme(
-                bodyLarge: AppTextStyles.inputText,
-                bodyMedium: AppTextStyles.subtitleMedium,
-              ),
-            ),
+            theme: AppTheme.lightTheme(),
+            darkTheme: AppTheme.darkTheme(),
+            themeMode: ThemeMode.system,
             initialRoute: '/',
             routes: getAppRoutes(),
           );

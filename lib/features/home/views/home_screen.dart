@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
+import 'package:wassit_freelancer_dz_flutter/core/services/api_services.dart';
+import 'package:wassit_freelancer_dz_flutter/core/widgets/animated_bottom_nav_bar.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/controllers/home_controller.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/providers/home_provider.dart';
-
-import '../../../core/services/api_services.dart';
+import 'package:wassit_freelancer_dz_flutter/features/main/views/chart_tab.dart';
+import 'package:wassit_freelancer_dz_flutter/features/main/views/clock_tab.dart';
+import 'package:wassit_freelancer_dz_flutter/features/main/views/home_tab.dart';
+import 'package:wassit_freelancer_dz_flutter/features/main/views/notifications_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,62 +24,32 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     final provider = Provider.of<HomeProvider>(context, listen: false);
     _controller = HomeController(provider, ApiService());
+    provider.controller = _controller;
   }
+
+  final List<Widget> _tabs = const [
+    HomeTab(),
+    ChartTab(),
+    ClockTab(),
+    NotificationsTab(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Accueil',
-          style: TextStyle(fontSize: 20.sp, color: AppColors.getText(context)),
-        ),
-        backgroundColor: AppColors.getBackground(context),
-      ),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Consumer<HomeProvider>(
         builder: (context, provider, child) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Bienvenue sur Wassit Freelancer DZ !',
-                  style: TextStyle(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.getText(context),
-                  ),
-                  textAlign: TextAlign.center,
-                ).animate().fadeIn(duration: 600.ms),
-                SizedBox(height: 40.h),
-                provider.model.isLoading
-                    ? CircularProgressIndicator(
-                  color: AppColors.getPrimary(context),
-                )
-                    : ElevatedButton(
-                  onPressed: () => _controller.logout(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 12.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                  ),
-                  child: Text(
-                    'Déconnexion',
-                    style: TextStyle(fontSize: 16.sp, color: Colors.white),
-                  ),
-                ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
-                if (provider.model.errorMessage != null) ...[
-                  SizedBox(height: 20.h),
-                  Text(
-                    provider.model.errorMessage!,
-                    style: TextStyle(color: Colors.red, fontSize: 14.sp),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ],
-            ),
+          return _tabs[provider.model.selectedIndex];
+        },
+      ),
+      bottomNavigationBar: Consumer<HomeProvider>(
+        builder: (context, provider, child) {
+          return AnimatedBottomNavBar(
+            selectedIndex: provider.model.selectedIndex,
+            onItemTapped: (index) {
+              provider.setSelectedIndex(index);
+            },
           );
         },
       ),
