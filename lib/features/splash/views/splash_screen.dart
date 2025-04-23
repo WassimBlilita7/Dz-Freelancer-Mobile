@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
           }
           return Center(
             child: Image.asset(
-              'assets/images/logo.png',
+              'assets/images/wassim.png',
               width: 200.w, // Taille responsive
               height: 200.h,
             )
