@@ -12,7 +12,7 @@ class OnboardingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void completeOnboarding() {
+  Future<void> completeOnboarding() async {
     _isCompleted = true;
     notifyListeners();
   }

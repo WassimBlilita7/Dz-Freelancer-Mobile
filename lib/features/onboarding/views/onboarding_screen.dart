@@ -37,7 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Consumer<OnboardingProvider>(
         builder: (context, provider, child) {
           if (provider.isCompleted && mounted) {
-            Future.delayed(Duration.zero, () {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mounted) {
                 Navigator.pushReplacementNamed(context, '/login');
               }
@@ -74,7 +74,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 top: 40.h,
                 right: 20.w,
                 child: TextButton(
-                  onPressed: _controller.skipOnboarding,
+                  onPressed: () async {
+                    await _controller.skipOnboarding();
+                  },
                   child: Text(
                     'Passer',
                     style: TextStyle(
@@ -89,7 +91,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _controller.nextPage,
+        onPressed: () async {
+          await _controller.nextPage();
+        },
         backgroundColor: AppColors.primaryGreen,
         child: Icon(Icons.arrow_forward, size: 24.w, color: Colors.white),
       ),

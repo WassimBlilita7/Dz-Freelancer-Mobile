@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wassit_freelancer_dz_flutter/core/middleware/auth_middleware.dart';
 import 'package:wassit_freelancer_dz_flutter/features/onboarding/providers/onboarding_provider.dart';
 
 class OnboardingController {
@@ -7,16 +8,16 @@ class OnboardingController {
 
   OnboardingController(this.provider) : pageController = PageController();
 
-  void nextPage() {
+  Future<void> nextPage() async {
     if (provider.currentPage < 2) {
       provider.setCurrentPage(provider.currentPage + 1);
-      pageController.animateToPage(
+      await pageController.animateToPage(
         provider.currentPage,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
-      provider.completeOnboarding();
+      await completeOnboarding();
     }
   }
 
@@ -24,8 +25,16 @@ class OnboardingController {
     provider.setCurrentPage(page);
   }
 
-  void skipOnboarding() {
-    provider.completeOnboarding();
+  Future<void> skipOnboarding() async {
+    final authMiddleware = AuthMiddleware();
+    await authMiddleware.setHasSeenOnboarding();
+    await provider.completeOnboarding();
+  }
+
+  Future<void> completeOnboarding() async {
+    final authMiddleware = AuthMiddleware();
+    await authMiddleware.setHasSeenOnboarding();
+    await provider.completeOnboarding();
   }
 
   void dispose() {

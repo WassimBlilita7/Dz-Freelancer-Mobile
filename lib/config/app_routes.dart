@@ -10,7 +10,7 @@ import '../features/splash/views/splash_screen.dart';
 
 Map<String, WidgetBuilder> getAppRoutes() {
   return {
-    '/': (context) => const SplashScreen(),
+    '/splash': (context) => const SplashScreen(),
     '/onboarding': (context) => const OnboardingScreen(),
     '/login': (context) => const LoginScreen(),
     '/signup': (context) => const SignupScreen(),
