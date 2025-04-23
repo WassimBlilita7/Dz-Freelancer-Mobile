@@ -23,26 +23,10 @@ class HomeTab extends StatelessWidget {
                 textAlign: TextAlign.center,
               ).animate().fadeIn(duration: 600.ms),
               SizedBox(height: 40.h),
-              provider.model.isLoading
-                  ? CircularProgressIndicator(
-                color: Theme.of(context).colorScheme.primary,
-              )
-                  : ElevatedButton(
-                onPressed: () => Provider.of<HomeProvider>(context, listen: false).controller?.logout(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.error,
-                  padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 12.h),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
+              if (provider.model.isLoading)
+                CircularProgressIndicator(
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                child: Text(
-                  'Déconnexion',
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onError,
-                  ),
-                ),
-              ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
             ],
           ),
         );

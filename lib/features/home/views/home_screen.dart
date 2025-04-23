@@ -37,15 +37,24 @@ class _HomeScreenState extends State<HomeScreen> {
     provider.controller = _controller;
 
     _appBarController = AppBarController(
-      onMenuPressed: () {
-        _scaffoldKey.currentState?.openDrawer();
-      },
-      onMessagesPressed: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Navigation vers la page de messages')),
-        );
-      },
+      onMenuPressed: _openDrawer,
+      onMessagesPressed: _navigateToMessages,
     );
+  }
+
+  void _openDrawer() {
+    _scaffoldKey.currentState?.openDrawer();
+  }
+
+  void _navigateToMessages() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers la page de messages')),
+    );
+  }
+
+  void _handleLogout() {
+    _controller.logout(context);
+    Navigator.pop(context); // Ferme le Drawer après la déconnexion
   }
 
   final List<Widget> _tabs = const [
@@ -59,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: AppColors.getBackground(context), // Utilisation de la couleur dynamique
+      backgroundColor: AppColors.getBackground(context),
       appBar: CustomAppBar(
         model: AppBarModel(unreadNotifications: 2),
         controller: _appBarController,
@@ -84,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: AppColors.getText(context),
                   ),
                   title: Text(
-                    'Changer de thème',
+                    'Théme',
                     style: AppTextStyles.subtitleMedium.copyWith(
                       color: AppColors.getText(context),
                     ),
@@ -105,7 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    // Naviguer vers la page de profil si nécessaire
                   },
                 ),
                 ListTile(
@@ -121,8 +129,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    // Naviguer vers la page de paramètres si nécessaire
                   },
+                ),
+                const Spacer(),
+                ListTile(
+                  leading: const Icon(
+                    Icons.logout,
+                    color: AppColors.errorRed,
+                  ),
+                  title: Text(
+                    'Déconnexion',
+                    style: AppTextStyles.subtitleMedium.copyWith(
+                      color: AppColors.errorRed,
+                    ),
+                  ),
+                  onTap: _handleLogout,
                 ),
               ],
             ),
