@@ -88,19 +88,22 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         controller: _otpControllers[index],
         focusNode: _focusNodes[index],
         textAlign: TextAlign.center,
-        style: AppTextStyles.otpInputText,
+        style: AppTextStyles.otpInputText.copyWith(
+          color: AppColors.getText(context),
+        ),
         decoration: InputDecoration(
+          counterText: '',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
-            borderSide: const BorderSide(color: AppColors.textLightGrey),
+            borderSide: BorderSide(color: AppColors.textLightGrey),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
-            borderSide: const BorderSide(color: AppColors.textLightGrey),
+            borderSide: BorderSide(color: AppColors.textLightGrey),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
-            borderSide: const BorderSide(color: AppColors.primaryGreen),
+            borderSide: BorderSide(color: AppColors.primaryGreen),
           ),
           contentPadding: EdgeInsets.symmetric(vertical: 10.h),
         ),
@@ -130,10 +133,11 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               _onNumberTap(number);
             }
           },
-          backgroundColor: isSubmit ? AppColors.primaryGreen : Colors.grey[200]!,
-          textColor: isSubmit ? Colors.white : AppColors.textDarkGrey,
+          backgroundColor: isSubmit ? AppColors.primaryGreen : AppColors.getBackground(context).withOpacity(0.1),
+          textColor: isSubmit ? Colors.white : AppColors.getText(context),
           borderRadius: 8.0,
           icon: isDelete ? Icons.backspace : isSubmit ? Icons.check : null,
+          iconColor: isDelete ? AppColors.getText(context) : Colors.white, // Utilisation correcte de iconColor
         ),
       ),
     );
@@ -163,13 +167,17 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         SizedBox(height: 20.h),
                         Text(
                           'Vérification du Code OTP',
-                          style: AppTextStyles.titleLarge,
+                          style: AppTextStyles.titleLarge.copyWith(
+                            color: AppColors.getText(context),
+                          ),
                           textAlign: TextAlign.center,
                         ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
                         SizedBox(height: 8.h),
                         Text(
                           'Nous avons envoyé un code OTP à votre email\n$_email\nVeuillez entrer le code de 6 chiffres pour vérifier.',
-                          style: AppTextStyles.subtitleMedium,
+                          style: AppTextStyles.subtitleMedium.copyWith(
+                            color: AppColors.textLightGrey,
+                          ),
                           textAlign: TextAlign.center,
                         ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
                         SizedBox(height: 40.h),
@@ -182,7 +190,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           onTap: _onResendTap,
                           child: Text(
                             'Vous n\'avez pas reçu le code ? Renvoyer l\'OTP',
-                            style: AppTextStyles.linkSmall,
+                            style: AppTextStyles.linkSmall.copyWith(
+                              color: AppColors.primaryBlue,
+                            ),
                           ),
                         ).animate().fadeIn(duration: 600.ms, delay: 500.ms),
                       ],

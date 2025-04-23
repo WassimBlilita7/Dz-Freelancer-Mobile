@@ -20,6 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late LoginController _controller;
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController(); // Ajout du contrôleur pour le numéro de téléphone
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
 
@@ -33,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     _emailController.dispose();
+    _phoneController.dispose(); // Dispose du nouveau contrôleur
     _passwordController.dispose();
     super.dispose();
   }
@@ -65,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/logo.png',
+                    'assets/images/wassim.png',
                     width: 80.w,
                     height: 80.h,
                     fit: BoxFit.contain,
@@ -73,12 +75,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 20.h),
                   Text(
                     'Bienvenue de nouveau !',
-                    style: AppTextStyles.titleLarge,
+                    style: AppTextStyles.titleLarge.copyWith(
+                      color: AppColors.getText(context),
+                    ),
                   ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
                   SizedBox(height: 8.h),
                   Text(
                     'Connectez-vous à votre compte',
-                    style: AppTextStyles.subtitleMedium,
+                    style: AppTextStyles.subtitleMedium.copyWith(
+                      color: AppColors.textLightGrey,
+                    ),
                   ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
                   SizedBox(height: 40.h),
                   CustomTextField(
@@ -87,8 +93,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     keyboardType: TextInputType.emailAddress,
                     onChanged: provider.updateEmail,
                     prefixIcon: Icons.email,
+                    prefixIconColor: AppColors.textLightGrey,
                   ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 400.ms),
                   SizedBox(height: 20.h),
+
                   CustomTextField(
                     label: 'Mot de passe',
                     controller: _passwordController,
@@ -96,6 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     obscureText: !_isPasswordVisible,
                     onChanged: provider.updatePassword,
                     prefixIcon: Icons.lock,
+                    prefixIconColor: AppColors.textLightGrey,
                     suffixIcon: IconButton(
                       icon: Icon(
                         _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -120,19 +129,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(vertical: 16.h),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.backgroundLight,
                         borderRadius: BorderRadius.circular(12.r),
                         border: Border.all(
                           color: AppColors.primaryGreen,
                           width: 1.w,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 8.r,
-                            offset: Offset(0, 2.h),
-                          ),
-                        ],
+                        boxShadow: AppColors.cardBoxShadow,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -159,13 +162,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Text(
                         'Vous n\'avez pas de compte ? ',
-                        style: AppTextStyles.labelSmall,
+                        style: AppTextStyles.labelSmall.copyWith(
+                          color: AppColors.getText(context),
+                        ),
                       ),
                       GestureDetector(
                         onTap: _navigateToSignup,
                         child: Text(
                           'Register',
-                          style: AppTextStyles.linkSmall,
+                          style: AppTextStyles.linkSmall.copyWith(
+                            color: AppColors.primaryBlue,
+                          ),
                         ),
                       ),
                     ],

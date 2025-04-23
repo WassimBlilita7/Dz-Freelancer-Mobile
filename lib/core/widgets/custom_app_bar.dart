@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
 import 'package:wassit_freelancer_dz_flutter/core/controllers/app_bar_controller.dart';
 import 'package:wassit_freelancer_dz_flutter/core/models/app_bar_model.dart';
 
@@ -18,7 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return IconButton(
       icon: Icon(
         Icons.menu,
-        color: const Color(0xFF2563EB),
+        color: AppColors.getText(context),
         size: 24.sp,
       ),
       onPressed: controller.handleMenuPress,
@@ -28,8 +29,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget _buildTitle(BuildContext context) {
     return Text(
       'DZFreelancer',
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-        color: Theme.of(context).colorScheme.onSurface,
+      style: TextStyle(
+        color: AppColors.getText(context),
         fontSize: 20.sp,
         fontWeight: FontWeight.w600,
       ),
@@ -42,7 +43,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: Icon(
             Icons.message,
-            color: Theme.of(context).colorScheme.secondary,
+            color: AppColors.primaryGreen,
             size: 24.sp,
           ),
           onPressed: controller.handleMessagesPress,
@@ -95,20 +96,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    // Définir le dégradé pour le fond
     final backgroundGradient = LinearGradient(
       colors: isDarkMode
-          ? [const Color(0xFF1E1E2F), const Color(0xFF2A1B5E)] // Gris anthracite à violet foncé
-          : [const Color(0xFFF8FAFC), const Color(0xFFEDE9FE)], // Blanc cassé à violet clair
+          ? [AppColors.backgroundDark, AppColors.primaryDark]
+          : [AppColors.backgroundLight, AppColors.primaryLight],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
     );
 
-    // Définir le dégradé pour la bordure inférieure
     final borderGradient = LinearGradient(
       colors: isDarkMode
-          ? [const Color(0xFF6D28D9), const Color(0xFFA78BFA)] // Violet foncé à violet clair
-          : [const Color(0xFFA78BFA), const Color(0xFFD6BCFA)], // Violet clair à violet plus clair
+          ? [AppColors.primaryDark, AppColors.primaryGreen]
+          : [AppColors.primaryLight, AppColors.primaryGreen],
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
     );
@@ -130,13 +129,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               width: 2.w,
               color: Colors.transparent,
               style: BorderStyle.solid,
-              // Utiliser un Shader pour appliquer le dégradé à la bordure
-              // On encapsule dans un Container pour simuler une bordure avec dégradé
             ),
           ),
         ),
         child: AppBar(
-          backgroundColor: Colors.transparent, // Fond transparent pour laisser le dégradé visible
+          backgroundColor: Colors.transparent,
           elevation: 0,
           leading: _buildLeadingIcon(context),
           title: _buildTitle(context),

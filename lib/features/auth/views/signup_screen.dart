@@ -19,6 +19,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   late SignupController _controller;
+  final TextEditingController _firstNameController = TextEditingController(); // Ajout du contrôleur pour le prénom
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -36,6 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   void dispose() {
+    _firstNameController.dispose(); // Dispose du nouveau contrôleur
     _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -80,20 +82,26 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 20.h),
                   Text(
                     'Créer un compte',
-                    style: AppTextStyles.titleLarge,
+                    style: AppTextStyles.titleLarge.copyWith(
+                      color: AppColors.getText(context),
+                    ),
                   ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
                   SizedBox(height: 8.h),
                   Text(
                     'Rejoignez Wassit Freelancer DZ !',
-                    style: AppTextStyles.subtitleMedium,
+                    style: AppTextStyles.subtitleMedium.copyWith(
+                      color: AppColors.textLightGrey,
+                    ),
                   ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
                   SizedBox(height: 40.h),
+
                   CustomTextField(
                     label: 'Nom d\'utilisateur',
                     controller: _usernameController,
                     keyboardType: TextInputType.text,
                     onChanged: provider.updateUsername,
                     prefixIcon: Icons.person,
+                    prefixIconColor: AppColors.textLightGrey,
                   ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 400.ms),
                   SizedBox(height: 20.h),
                   CustomTextField(
@@ -102,6 +110,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     keyboardType: TextInputType.emailAddress,
                     onChanged: provider.updateEmail,
                     prefixIcon: Icons.email,
+                    prefixIconColor: AppColors.textLightGrey,
                   ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 500.ms),
                   SizedBox(height: 20.h),
                   CustomTextField(
@@ -111,6 +120,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     obscureText: !_isPasswordVisible,
                     onChanged: provider.updatePassword,
                     prefixIcon: Icons.lock,
+                    prefixIconColor: AppColors.textLightGrey,
                     suffixIcon: IconButton(
                       icon: Icon(
                         _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -127,6 +137,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     obscureText: !_isConfirmPasswordVisible,
                     onChanged: provider.updateConfirmPassword,
                     prefixIcon: Icons.lock,
+                    prefixIconColor: AppColors.textLightGrey,
                     suffixIcon: IconButton(
                       icon: Icon(
                         _isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -143,10 +154,13 @@ class _SignupScreenState extends State<SignupScreen> {
                         value: provider.model.isFreelancer,
                         onChanged: (value) => provider.toggleFreelancer(value ?? false),
                         activeColor: AppColors.primaryGreen,
+                        checkColor: Colors.white,
                       ),
                       Text(
                         'Je suis un freelance',
-                        style: AppTextStyles.labelSmall,
+                        style: AppTextStyles.labelSmall.copyWith(
+                          color: AppColors.getText(context),
+                        ),
                       ),
                     ],
                   ).animate().fadeIn(duration: 600.ms, delay: 700.ms),
@@ -165,13 +179,17 @@ class _SignupScreenState extends State<SignupScreen> {
                     children: [
                       Text(
                         'Déjà un compte ? ',
-                        style: AppTextStyles.labelSmall,
+                        style: AppTextStyles.labelSmall.copyWith(
+                          color: AppColors.getText(context),
+                        ),
                       ),
                       GestureDetector(
                         onTap: _navigateToLogin,
                         child: Text(
                           'Connectez-vous ici',
-                          style: AppTextStyles.linkSmall,
+                          style: AppTextStyles.linkSmall.copyWith(
+                            color: AppColors.primaryBlue,
+                          ),
                         ),
                       ),
                     ],

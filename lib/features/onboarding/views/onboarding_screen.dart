@@ -78,7 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Text(
                     'Passer',
                     style: TextStyle(
-                      color: AppColors.getText(context),
+                      color: AppColors.primaryBlue,
                       fontSize: 16.sp,
                     ),
                   ),
@@ -90,7 +90,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _controller.nextPage,
-        backgroundColor: AppColors.getPrimary(context),
+        backgroundColor: AppColors.primaryGreen,
         child: Icon(Icons.arrow_forward, size: 24.w, color: Colors.white),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/config/app_routes.dart';
+import 'package:wassit_freelancer_dz_flutter/core/providers/theme_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/core/themes/app_theme.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/login_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/signup_provider.dart';
@@ -25,20 +26,25 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoginProvider()),
         ChangeNotifierProvider(create: (_) => SignupProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()), // Ajout du ThemeProvider
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MaterialApp(
-            title: 'Wassit Freelancer DZ',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme(),
-            darkTheme: AppTheme.darkTheme(),
-            themeMode: ThemeMode.system,
-            initialRoute: '/',
-            routes: getAppRoutes(),
+          return Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) {
+              return MaterialApp(
+                title: 'Wassit Freelancer DZ',
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.lightTheme(),
+                darkTheme: AppTheme.darkTheme(),
+                themeMode: themeProvider.model.themeMode, // Utilisation du themeMode du ThemeProvider
+                initialRoute: '/',
+                routes: getAppRoutes(),
+              );
+            },
           );
         },
       ),
