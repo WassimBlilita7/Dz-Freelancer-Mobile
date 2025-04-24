@@ -40,7 +40,7 @@ class CustomToast extends StatelessWidget {
           Expanded(
             child: Text(
               message,
-              style: AppTextStyles.labelSmall.copyWith(
+              style: AppTextStyles.labelSmall(context).copyWith(
                 color: Colors.white,
               ),
             ),

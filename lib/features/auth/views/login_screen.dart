@@ -20,7 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late LoginController _controller;
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController(); // Ajout du contrôleur pour le numéro de téléphone
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
 
@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     _emailController.dispose();
-    _phoneController.dispose(); // Dispose du nouveau contrôleur
+    _phoneController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -50,7 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleGoogleLogin() {
-    // TODO: Implémenter la connexion Google
     print('Connexion Google');
   }
 
@@ -75,16 +74,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 20.h),
                   Text(
                     'Bienvenue de nouveau !',
-                    style: AppTextStyles.titleLarge.copyWith(
-                      color: AppColors.getText(context),
-                    ),
+                    style: AppTextStyles.titleLarge(context),
                   ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
                   SizedBox(height: 8.h),
                   Text(
                     'Connectez-vous à votre compte',
-                    style: AppTextStyles.subtitleMedium.copyWith(
-                      color: AppColors.textLightGrey,
-                    ),
+                    style: AppTextStyles.subtitleMedium(context),
                   ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
                   SizedBox(height: 40.h),
                   CustomTextField(
@@ -96,7 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     prefixIconColor: AppColors.textLightGrey,
                   ).animate().slideY(begin: 0.2, end: 0.0, duration: 600.ms, delay: 400.ms),
                   SizedBox(height: 20.h),
-
                   CustomTextField(
                     label: 'Mot de passe',
                     controller: _passwordController,
@@ -148,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(width: 10.w),
                           Text(
                             'Se connecter avec Google',
-                            style: AppTextStyles.buttonText.copyWith(
+                            style: AppTextStyles.buttonText(context).copyWith(
                               color: AppColors.primaryGreen,
                             ),
                           ),
@@ -162,17 +156,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Text(
                         'Vous n\'avez pas de compte ? ',
-                        style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.getText(context),
-                        ),
+                        style: AppTextStyles.labelSmall(context),
                       ),
                       GestureDetector(
                         onTap: _navigateToSignup,
                         child: Text(
                           'Register',
-                          style: AppTextStyles.linkSmall.copyWith(
-                            color: AppColors.primaryBlue,
-                          ),
+                          style: AppTextStyles.linkSmall(context),
                         ),
                       ),
                     ],

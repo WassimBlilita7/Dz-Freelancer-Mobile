@@ -18,7 +18,7 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.label,
     required this.controller,
-     this.keyboardType,
+    this.keyboardType,
     required this.onChanged,
     required this.prefixIcon,
     this.prefixIconColor,
@@ -34,9 +34,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       onChanged: onChanged,
-      style: AppTextStyles.bodyText.copyWith(
-        color: AppColors.getText(context), // Couleur dynamique selon le thème
-      ),
+      style: AppTextStyles.bodyText(context),
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(

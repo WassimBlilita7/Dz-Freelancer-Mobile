@@ -27,9 +27,7 @@ class CustomDrawer extends StatelessWidget {
             children: [
               Text(
                 'Menu',
-                style: AppTextStyles.titleLarge.copyWith(
-                  color: AppColors.getText(context),
-                ),
+                style: AppTextStyles.titleLarge(context),
               ),
               SizedBox(height: 20.h),
               ListTile(
@@ -38,8 +36,8 @@ class CustomDrawer extends StatelessWidget {
                   color: AppColors.getText(context),
                 ),
                 title: Text(
-                  'Théme',
-                  style: AppTextStyles.subtitleMedium.copyWith(
+                  'Thème',
+                  style: AppTextStyles.subtitleMedium(context).copyWith(
                     color: AppColors.getText(context),
                   ),
                 ),
@@ -53,7 +51,7 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 title: Text(
                   'Profil',
-                  style: AppTextStyles.subtitleMedium.copyWith(
+                  style: AppTextStyles.subtitleMedium(context).copyWith(
                     color: AppColors.getText(context),
                   ),
                 ),
@@ -66,7 +64,7 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 title: Text(
                   'Paramètres',
-                  style: AppTextStyles.subtitleMedium.copyWith(
+                  style: AppTextStyles.subtitleMedium(context).copyWith(
                     color: AppColors.getText(context),
                   ),
                 ),
@@ -80,13 +78,13 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 title: Text(
                   'Déconnexion',
-                  style: AppTextStyles.subtitleMedium.copyWith(
+                  style: AppTextStyles.subtitleMedium(context).copyWith(
                     color: AppColors.errorRed,
                   ),
                 ),
                 onTap: () {
                   onLogout();
-                  Navigator.pop(context); // Ferme le Drawer après la déconnexion
+                  Navigator.pop(context);
                 },
               ),
             ],

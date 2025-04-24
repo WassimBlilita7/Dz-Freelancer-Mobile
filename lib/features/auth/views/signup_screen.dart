@@ -19,7 +19,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   late SignupController _controller;
-  final TextEditingController _firstNameController = TextEditingController(); // Ajout du contrôleur pour le prénom
+  final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -37,7 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   void dispose() {
-    _firstNameController.dispose(); // Dispose du nouveau contrôleur
+    _firstNameController.dispose();
     _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -82,19 +82,14 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 20.h),
                   Text(
                     'Créer un compte',
-                    style: AppTextStyles.titleLarge.copyWith(
-                      color: AppColors.getText(context),
-                    ),
+                    style: AppTextStyles.titleLarge(context),
                   ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
                   SizedBox(height: 8.h),
                   Text(
                     'Rejoignez Wassit Freelancer DZ !',
-                    style: AppTextStyles.subtitleMedium.copyWith(
-                      color: AppColors.textLightGrey,
-                    ),
+                    style: AppTextStyles.subtitleMedium(context),
                   ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
                   SizedBox(height: 40.h),
-
                   CustomTextField(
                     label: 'Nom d\'utilisateur',
                     controller: _usernameController,
@@ -158,9 +153,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       Text(
                         'Je suis un freelance',
-                        style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.getText(context),
-                        ),
+                        style: AppTextStyles.labelSmall(context),
                       ),
                     ],
                   ).animate().fadeIn(duration: 600.ms, delay: 700.ms),
@@ -179,17 +172,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     children: [
                       Text(
                         'Déjà un compte ? ',
-                        style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.getText(context),
-                        ),
+                        style: AppTextStyles.labelSmall(context),
                       ),
                       GestureDetector(
                         onTap: _navigateToLogin,
                         child: Text(
                           'Connectez-vous ici',
-                          style: AppTextStyles.linkSmall.copyWith(
-                            color: AppColors.primaryBlue,
-                          ),
+                          style: AppTextStyles.linkSmall(context),
                         ),
                       ),
                     ],

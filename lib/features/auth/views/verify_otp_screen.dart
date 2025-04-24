@@ -77,7 +77,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   }
 
   void _onResendTap() {
-    // TODO: Implémenter la logique de renvoi d'OTP
     print('Renvoyer l\'OTP');
   }
 
@@ -88,9 +87,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         controller: _otpControllers[index],
         focusNode: _focusNodes[index],
         textAlign: TextAlign.center,
-        style: AppTextStyles.otpInputText.copyWith(
-          color: AppColors.getText(context),
-        ),
+        style: AppTextStyles.otpInputText(context),
         decoration: InputDecoration(
           counterText: '',
           border: OutlineInputBorder(
@@ -137,7 +134,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
           textColor: isSubmit ? Colors.white : AppColors.getText(context),
           borderRadius: 8.0,
           icon: isDelete ? Icons.backspace : isSubmit ? Icons.check : null,
-          iconColor: isDelete ? AppColors.getText(context) : Colors.white, // Utilisation correcte de iconColor
+          iconColor: isDelete ? AppColors.getText(context) : Colors.white,
         ),
       ),
     );
@@ -167,17 +164,13 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         SizedBox(height: 20.h),
                         Text(
                           'Vérification du Code OTP',
-                          style: AppTextStyles.titleLarge.copyWith(
-                            color: AppColors.getText(context),
-                          ),
+                          style: AppTextStyles.titleLarge(context),
                           textAlign: TextAlign.center,
                         ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
                         SizedBox(height: 8.h),
                         Text(
                           'Nous avons envoyé un code OTP à votre email\n$_email\nVeuillez entrer le code de 6 chiffres pour vérifier.',
-                          style: AppTextStyles.subtitleMedium.copyWith(
-                            color: AppColors.textLightGrey,
-                          ),
+                          style: AppTextStyles.subtitleMedium(context),
                           textAlign: TextAlign.center,
                         ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
                         SizedBox(height: 40.h),
@@ -190,9 +183,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           onTap: _onResendTap,
                           child: Text(
                             'Vous n\'avez pas reçu le code ? Renvoyer l\'OTP',
-                            style: AppTextStyles.linkSmall.copyWith(
-                              color: AppColors.primaryBlue,
-                            ),
+                            style: AppTextStyles.linkSmall(context),
                           ),
                         ).animate().fadeIn(duration: 600.ms, delay: 500.ms),
                       ],

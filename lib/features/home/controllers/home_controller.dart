@@ -1,17 +1,48 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassit_freelancer_dz_flutter/core/middleware/auth_middleware.dart';
 import 'package:wassit_freelancer_dz_flutter/core/services/api_services.dart';
-import 'package:wassit_freelancer_dz_flutter/features/home/models/home_model.dart';
+import 'package:wassit_freelancer_dz_flutter/features/auth/views/login_screen.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/providers/home_provider.dart';
-
-import '../../auth/views/login_screen.dart';
 
 class HomeController {
   final HomeProvider provider;
   final ApiService apiService;
 
   HomeController(this.provider, this.apiService);
+
+  Future<void> fetchUserProfile() async {
+    // Éviter de refaire l'appel si les données sont déjà récupérées
+    if (provider.model.username != null && provider.model.isFreelancer != null) {
+      return;
+    }
+
+    try {
+      provider.setLoading(true);
+
+      // Récupérer le token depuis SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('jwt-freelancerDZ');
+
+      if (token == null) {
+        throw Exception('Utilisateur non authentifié');
+      }
+
+      // Appeler l'API pour obtenir les données de l'utilisateur
+      final response = await apiService.getUserProfile(token);
+
+      final userData = response['userData'] as Map<String, dynamic>;
+      final username = userData['username'] as String;
+      final isFreelancer = userData['isFreelancer'] as bool;
+
+      provider.setUserData(username, isFreelancer);
+    } catch (e) {
+      provider.setError(e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      provider.setLoading(false);
+    }
+  }
 
   Future<void> _clearAuthData() async {
     final authMiddleware = AuthMiddleware();

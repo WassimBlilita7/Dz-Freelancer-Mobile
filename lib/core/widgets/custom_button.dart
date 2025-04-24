@@ -35,7 +35,7 @@ class CustomButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(borderRadius.r),
-          boxShadow: AppColors.cardBoxShadow, // Utilisation de l'ombre définie dans app_colors.dart
+          boxShadow: AppColors.cardBoxShadow,
         ),
         child: isLoading
             ? Center(
@@ -57,8 +57,8 @@ class CustomButton extends StatelessWidget {
             Text(
               title,
               style: icon == null
-                  ? AppTextStyles.buttonText.copyWith(color: textColor)
-                  : AppTextStyles.otpKeyboardText.copyWith(color: textColor),
+                  ? AppTextStyles.buttonText(context).copyWith(color: textColor)
+                  : AppTextStyles.otpKeyboardText(context).copyWith(color: textColor),
               textAlign: TextAlign.center,
             ),
           ],

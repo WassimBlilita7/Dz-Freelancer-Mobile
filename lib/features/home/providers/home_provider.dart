@@ -18,6 +18,16 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setUserData(String username, bool isFreelancer) {
+    _model = _model.copyWith(username: username, isFreelancer: isFreelancer);
+    notifyListeners();
+  }
+
+  void setError(String errorMessage) {
+    _model = _model.copyWith(errorMessage: errorMessage, isLoading: false);
+    notifyListeners();
+  }
+
   void clear() {
     _model = HomeModel();
     notifyListeners();

@@ -103,4 +103,28 @@ class ApiService {
       throw Exception(e.toString().replaceFirst('Exception: ', ''));
     }
   }
+
+  Future<Map<String, dynamic>> getUserProfile(String token) async {
+    final url = Uri.parse('${ApiConstants.baseUrl}/auth/profile');
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      ).timeout(const Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        final errorBody = jsonDecode(response.body);
+        throw Exception(errorBody['message'] ?? 'Erreur inconnue');
+      }
+    } on TimeoutException {
+      throw Exception('Le serveur ne répond pas. Vérifiez votre connexion.');
+    } catch (e) {
+      throw Exception(e.toString().replaceFirst('Exception: ', ''));
+    }
+  }
 }
