@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/controllers/home_controller.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/models/home_model.dart';
+import 'package:wassit_freelancer_dz_flutter/features/home/models/category_model.dart';
 
 class HomeProvider extends ChangeNotifier {
   HomeModel _model = HomeModel();
@@ -25,6 +26,11 @@ class HomeProvider extends ChangeNotifier {
 
   void setError(String errorMessage) {
     _model = _model.copyWith(errorMessage: errorMessage, isLoading: false);
+    notifyListeners();
+  }
+
+  void setCategories(List<CategoryModel> categories) {
+    _model = _model.copyWith(categories: categories);
     notifyListeners();
   }
 

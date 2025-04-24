@@ -33,6 +33,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/onBoarding/
+    - assets/images/categories/
     - assets/icons/
     - assets/lottie/
   fonts:
