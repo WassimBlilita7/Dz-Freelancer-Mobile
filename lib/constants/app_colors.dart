@@ -17,6 +17,9 @@ class AppColors {
   static const Color textDark = Color(0xFFE0E0E0); // Light gray
   static const Color accentDark = Color(0xFFFFB300); // Darker amber
 
+  // Couleur personnalisée pour la carte en mode sombre
+  static const Color promoPink = Color(0xFFFF94A2); // Rose doux pour le mode sombre
+
   // Get colors based on theme
   static Color getPrimary(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark ? primaryDark : primaryLight;
@@ -65,5 +68,4 @@ class AppColors {
   static const primaryBlue = Color(0xFF1565C0); // Bleu pour le bouton et le lien
   static const textDarkGrey = Color(0xFF333333); // Gris foncé pour le titre
   static const textLightGrey = Color(0xFF666666); // Gris clair pour le sous-titre
-
 }

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
+import 'package:wassit_freelancer_dz_flutter/core/widgets/promo_card.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/providers/home_provider.dart';
 
 class HomeTab extends StatefulWidget {
@@ -60,8 +61,8 @@ class _HomeTabState extends State<HomeTab> {
 
         final username = provider.model.username ?? 'Utilisateur';
         final welcomeMessage = provider.model.isFreelancer == true
-            ? 'Travaillez librement, gagnez mieux 🚀'
-            : 'Trouvez le bon talent 📱';
+            ? 'Liberté, mission, revenu, impact ❤️‍🔥'
+            : 'Qualité, rapidité, budget maîtrisé 🥶';
 
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
@@ -69,7 +70,7 @@ class _HomeTabState extends State<HomeTab> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hi $username 💙',
+                'Hi $username',
                 style: AppTextStyles.titleLarge(context),
               ).animate().fadeIn(duration: 600.ms),
               SizedBox(height: 5.h),
@@ -77,16 +78,11 @@ class _HomeTabState extends State<HomeTab> {
                 welcomeMessage,
                 style: AppTextStyles.subtitleMedium(context),
               ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
-              const Spacer(),
-              Center(
-                child: Text(
-                  'Bienvenue sur Wassit Freelancer DZ !',
-                  style: AppTextStyles.titleLarge(context).copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                  textAlign: TextAlign.center,
-                ).animate().fadeIn(duration: 600.ms),
+              SizedBox(height: 16.h), // Espacement avant la carte
+              PromoCard(
+                isFreelancer: provider.model.isFreelancer ?? false,
               ),
+              const Spacer(),
               const Spacer(),
             ],
           ),
