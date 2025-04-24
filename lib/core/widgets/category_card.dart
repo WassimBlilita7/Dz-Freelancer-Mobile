@@ -4,10 +4,12 @@ import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
 
 class CategoryCard extends StatelessWidget {
   final String name;
+  final VoidCallback? onTap;
 
   const CategoryCard({
     super.key,
     required this.name,
+    this.onTap,
   });
 
   String _getCategoryImage(String categoryName) {
@@ -38,44 +40,49 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    return Container(
-      width: 80.w,
-      margin: EdgeInsets.symmetric(horizontal: 8.w),
-      padding: EdgeInsets.symmetric(vertical: 8.h),
-      decoration: BoxDecoration(
-        color: isDarkMode ? AppColors.backgroundDark : Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        boxShadow: AppColors.cardBoxShadow,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            _getCategoryImage(name), // Utilisation de _getCategoryImage
-            width: 28.w,
-            height: 28.h,
-            fit: BoxFit.contain,
-            errorBuilder: (context, error, stackTrace) {
-              return Icon(
-                Icons.category,
-                size: 28.sp,
-                color: AppColors.primaryBlue,
-              );
-            },
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            name,
-            style: TextStyle(
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w500,
-              color: AppColors.getText(context),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12.r),
+      splashColor: AppColors.primaryBlue.withOpacity(0.2), // Effet de ripple
+      child: Container(
+        width: 80.w,
+        margin: EdgeInsets.symmetric(horizontal: 8.w),
+        padding: EdgeInsets.symmetric(vertical: 8.h),
+        decoration: BoxDecoration(
+          color: isDarkMode ? AppColors.backgroundDark : Colors.white,
+          borderRadius: BorderRadius.circular(12.r),
+          boxShadow: AppColors.cardBoxShadow,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              _getCategoryImage(name),
+              width: 28.w,
+              height: 28.h,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(
+                  Icons.category,
+                  size: 28.sp,
+                  color: AppColors.primaryBlue,
+                );
+              },
             ),
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+            SizedBox(height: 4.h),
+            Text(
+              name,
+              style: TextStyle(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.getText(context),
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

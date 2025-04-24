@@ -22,7 +22,7 @@ class _HomeTabState extends State<HomeTab> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = Provider.of<HomeProvider>(context, listen: false);
       provider.controller?.fetchUserProfile();
-      provider.controller?.fetchCategories(); // Charger les catégories
+      provider.controller?.fetchCategories();
     });
   }
 
@@ -93,7 +93,17 @@ class _HomeTabState extends State<HomeTab> {
               itemCount: provider.model.categories.length,
               itemBuilder: (context, index) {
                 final category = provider.model.categories[index];
-                return CategoryCard(name: category.name);
+                return CategoryCard(
+                  name: category.name,
+                  onTap: () {
+                    // Action lors du clic sur la carte
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Catégorie sélectionnée : ${category.name}'),
+                      ),
+                    );
+                  },
+                );
               },
             ),
           ).animate().fadeIn(duration: 600.ms, delay: 600.ms),
