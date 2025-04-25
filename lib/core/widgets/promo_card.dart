@@ -16,79 +16,66 @@ class PromoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Contenu différent selon isFreelancer
     final String discountText = '15%';
-    final String title = isFreelancer
-        ? 'Boostez vos projets !'
-        : 'Black Friday !';
+    final String title = isFreelancer ? 'Postuler 🔍' : 'Publiez 🚀';
     final String subtitle = isFreelancer
-        ? 'Obtenez 15% de réduction sur vos abonnements ce mois-ci.'
-        : 'Obtenez 15% de réduction sur chaque commande ce Black Friday.';
+        ? 'Recevez 15% de réduction sur vos abonnements ce mois-ci.'
+        : 'Bénéficiez de 15% de réduction sur chaque projet publié ce mois-ci.';
 
-    // Définir le dégradé ou la couleur selon le thème
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     final Decoration cardDecoration = BoxDecoration(
       gradient: isDarkMode
           ? const LinearGradient(
-        colors: [
-          AppColors.backgroundDark, // #121212
-          AppColors.primaryDark, // #1976D2
-        ],
+        colors: [AppColors.backgroundDark, AppColors.primaryDark],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       )
-          : null,
-      color: isDarkMode ? null : AppColors.bubbleColor1, // #42A5F5 pour le mode clair
-      borderRadius: BorderRadius.circular(12.r),
+          : const LinearGradient(
+        colors: [AppColors.bubbleColor1, AppColors.bubbleColor2],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      borderRadius: BorderRadius.circular(20.r),
       boxShadow: AppColors.cardBoxShadow,
     );
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+      padding: EdgeInsets.all(16.w),
       decoration: cardDecoration,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
+            flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      discountText,
-                      style: TextStyle(
-                        fontSize: 40.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 4.h),
                 Text(
-                  subtitle,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white.withOpacity(0.9),
-                    fontFamily: 'Poppins',
+                  discountText,
+                  style: AppTextStyles.titleLarge(context).copyWith(
+                    color: Colors.white,
+                    fontSize: 32.sp,
+                  ),
+                ),
+                SizedBox(height: 6.h),
+                Text(
+                  title,
+                  style: AppTextStyles.subtitleMedium(context).copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.sp,
                   ),
                 ),
                 SizedBox(height: 8.h),
+                Text(
+                  subtitle,
+                  style: AppTextStyles.labelSmall(context).copyWith(
+                    color: Colors.white.withOpacity(0.9),
+                  ),
+                ),
+                SizedBox(height: 12.h),
                 SmoothPageIndicator(
                   controller: PageController(initialPage: 0),
                   count: 3,
@@ -103,16 +90,19 @@ class PromoCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            width: 80.w,
-            height: 80.h,
+          SizedBox(width: 12.w),
+          Expanded(
+            flex: 1,
             child: Lottie.asset(
               'assets/lottie/promo.json',
+              height: 80.h,
               fit: BoxFit.contain,
             ),
           ),
         ],
       ),
-    ).animate().fadeIn(duration: 600.ms, delay: 800.ms);
+    ).animate()
+        .slideY(begin: 0.2, end: 0.0, duration: 600.ms)
+        .fadeIn(duration: 600.ms, delay: 400.ms);
   }
 }
