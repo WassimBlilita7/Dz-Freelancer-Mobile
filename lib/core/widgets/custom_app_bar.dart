@@ -1,9 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
+import 'package:wassit_freelancer_dz_flutter/constants/app_images.dart';
 import 'package:wassit_freelancer_dz_flutter/core/controllers/app_bar_controller.dart';
 import 'package:wassit_freelancer_dz_flutter/core/models/app_bar_model.dart';
+import 'package:wassit_freelancer_dz_flutter/core/services/profile_picture_service.dart'; // Import du service
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppBarModel model;
@@ -73,22 +75,39 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildProfileImage(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 16.w),
-      child: CircleAvatar(
-        radius: 18.r,
-        backgroundColor: Colors.white,
-        child: ClipOval(
-          child: CachedNetworkImage(
-            imageUrl: 'https://cdn-icons-png.flaticon.com/128/3135/3135715.png',
-            width: 36.r,
-            height: 36.r,
-            fit: BoxFit.cover,
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          ),
-        ),
-      ),
+    return FutureBuilder<String>(
+      future: getProfileImageUrl(), // Appel à la fonction pour récupérer la photo de profil
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Padding(
+            padding: EdgeInsets.only(right: 16.w),
+            child: CircleAvatar(
+              radius: 18.r,
+              backgroundColor: Colors.white,
+              child: const CircularProgressIndicator(),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Padding(
+            padding: EdgeInsets.only(right: 16.w),
+            child: CircleAvatar(
+              radius: 18.r,
+              backgroundColor: Colors.white,
+              child: const Icon(Icons.error),
+            ),
+          );
+        } else {
+          String imageUrl = snapshot.data ?? AppUtils.emptyImage; // Photo par défaut
+          return Padding(
+            padding: EdgeInsets.only(right: 16.w),
+            child: CircleAvatar(
+              radius: 18.r,
+              backgroundColor: Colors.white,
+              backgroundImage: NetworkImage(imageUrl),
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -140,7 +159,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           centerTitle: true,
           actions: [
             _buildMessagesIcon(context),
-            _buildProfileImage(context),
+            _buildProfileImage(context), // Utilisation de la photo de profil récupérée
           ],
         ),
       ),
