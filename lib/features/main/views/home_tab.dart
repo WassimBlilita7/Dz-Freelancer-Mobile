@@ -7,6 +7,7 @@ import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/category_card.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/promo_card.dart';
+import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_button.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/providers/home_provider.dart';
 
 class HomeTab extends StatefulWidget {
@@ -112,6 +113,19 @@ class _HomeTabState extends State<HomeTab> {
           _buildPromoCard(provider),
           SizedBox(height: 16.h),
           _buildCategorySection(provider),
+          if (provider.model.isFreelancer == false) ...[
+            SizedBox(height: 16.h),
+            CustomButton(
+              title: 'Créer un post',
+              onTap: () {
+                Navigator.pushNamed(context, '/create_post');
+              },
+              backgroundColor: AppColors.primaryGreen,
+              textColor: Colors.white,
+              icon: Icons.add,
+              iconColor: Colors.white,
+            ).animate().fadeIn(duration: 600.ms, delay: 800.ms),
+          ],
           const Spacer(),
         ],
       ),

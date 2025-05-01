@@ -5,6 +5,7 @@ import 'package:wassit_freelancer_dz_flutter/features/auth/views/verify_otp_scre
 
 import '../features/home/views/home_screen.dart';
 import '../features/onboarding/views/onboarding_screen.dart';
+import '../features/post/screens/create_post_screen.dart';
 import '../features/splash/views/splash_screen.dart';
 
 
@@ -16,5 +17,6 @@ Map<String, WidgetBuilder> getAppRoutes() {
     '/signup': (context) => const SignupScreen(),
     '/verify-otp': (context) => const VerifyOtpScreen(),
     '/home': (context) => const HomeScreen(),
+    '/create_post': (context) => const CreatePostScreen()
   };
 }

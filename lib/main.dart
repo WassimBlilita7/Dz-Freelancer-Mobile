@@ -3,12 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/config/app_routes.dart';
 import 'package:wassit_freelancer_dz_flutter/core/providers/theme_provider.dart';
+import 'package:wassit_freelancer_dz_flutter/core/services/post_api_service.dart';
 import 'package:wassit_freelancer_dz_flutter/core/themes/app_theme.dart';
 import 'package:wassit_freelancer_dz_flutter/core/wrappers/splash_wrapper.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/login_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/auth/providers/signup_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/home/providers/home_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/onboarding/providers/onboarding_provider.dart';
+import 'package:wassit_freelancer_dz_flutter/features/post/controllers/post_controller.dart';
+import 'package:wassit_freelancer_dz_flutter/features/post/providers/post_provider.dart';
 import 'package:wassit_freelancer_dz_flutter/features/splash/providers/splash_provider.dart';
 
 void main() {
@@ -28,6 +31,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SignupProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(
+          create: (_) => PostProvider()
+            ..controller = PostController(PostProvider(), PostApiService()),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
