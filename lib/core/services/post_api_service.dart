@@ -8,7 +8,7 @@ import 'package:wassit_freelancer_dz_flutter/constants/api_constants.dart';
 import 'package:wassit_freelancer_dz_flutter/features/post/models/post_model.dart';
 
 class PostApiService {
-  Future<PostModel> createPost({
+  Future<Map<String, dynamic>> createPost({
     required String title,
     required String description,
     required List<String> skillsRequired,
@@ -21,6 +21,9 @@ class PostApiService {
     final token = prefs.getString('jwt-freelancerDZ');
 
     if (token == null) {
+      if (kDebugMode) {
+        print('PostApiService: Aucun token trouvé dans SharedPreferences');
+      }
       throw Exception('Utilisateur non authentifié');
     }
 
@@ -77,18 +80,39 @@ class PostApiService {
       if (response.statusCode == 201) {
         try {
           final json = jsonDecode(response.body);
-          // Gérer différentes structures de réponse
-          final postJson = json['post'] ?? json['data'] ?? json['result'] ?? json;
-          if (postJson == null || postJson is! Map<String, dynamic>) {
-            throw Exception('Aucun post valide trouvé dans la réponse');
+          if (json is Map<String, dynamic>) {
+            if (kDebugMode) {
+              print('PostApiService: JSON décodé: $json');
+            }
+            final postJson = json['post'] ?? json['data'] ?? json['result'] ?? json;
+            if (postJson is Map<String, dynamic>) {
+              return {
+                'success': true,
+                'post': PostModel.fromJson(postJson),
+                'message': json['message']?.toString() ?? 'Post créé avec succès',
+              };
+            }
           }
-          return PostModel.fromJson(postJson);
+          // Gérer le cas où la réponse est une String ou un JSON invalide
+          if (kDebugMode) {
+            print('PostApiService: Réponse n\'est pas un Map, traité comme succès: ${response.body}');
+          }
+          return {
+            'success': true,
+            'post': null,
+            'message': response.body.isNotEmpty ? response.body : 'Post créé avec succès',
+          };
         } catch (e) {
           if (kDebugMode) {
             print('PostApiService: Erreur de parsing JSON: $e');
             print('PostApiService: Corps de la réponse: ${response.body}');
           }
-          throw Exception('Erreur de format de la réponse du serveur: $e');
+          // Succès sans PostModel si parsing échoue
+          return {
+            'success': true,
+            'post': null,
+            'message': response.body.isNotEmpty ? response.body : 'Post créé avec succès',
+          };
         }
       } else if (response.statusCode == 413) {
         throw Exception('Image trop volumineuse, essayez une taille plus petite (max 5 Mo)');
@@ -98,7 +122,7 @@ class PostApiService {
         String errorMessage = 'Erreur inconnue';
         try {
           final errorBody = jsonDecode(response.body);
-          errorMessage = errorBody['message'] ?? 'Erreur serveur';
+          errorMessage = errorBody['message']?.toString() ?? 'Erreur serveur';
         } catch (_) {
           errorMessage = 'Réponse serveur invalide: ${response.body}';
         }

@@ -6,11 +6,12 @@ import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
 class CustomToast extends StatelessWidget {
   final String message;
   final bool isSuccess;
+  final Color? bgColor;
 
   const CustomToast({
     super.key,
     required this.message,
-    required this.isSuccess,
+    required this.isSuccess, this.bgColor
   });
 
   @override

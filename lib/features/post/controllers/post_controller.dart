@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
 import 'package:wassit_freelancer_dz_flutter/core/services/post_api_service.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_toast.dart';
+import 'package:wassit_freelancer_dz_flutter/features/post/models/post_model.dart';
 import 'package:wassit_freelancer_dz_flutter/features/post/providers/post_provider.dart';
 
 class PostController {
@@ -31,9 +33,10 @@ class PostController {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const CustomToast(
+            content: CustomToast(
               message: 'Veuillez remplir tous les champs',
               isSuccess: false,
+              bgColor: AppColors.errorRed,
             ),
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.transparent,
@@ -52,7 +55,7 @@ class PostController {
 
       provider.setLoading(true);
 
-      final post = await apiService.createPost(
+      final result = await apiService.createPost(
         title: title,
         description: description,
         skillsRequired: skillsRequired,
@@ -62,43 +65,54 @@ class PostController {
         imageFile: imageFile,
       );
 
-      provider.setSuccess(post);
+      if (kDebugMode) {
+        print('PostController: Résultat de createPost: $result');
+      }
 
-      if (context.mounted) {
-        if (kDebugMode) {
-          print('PostController: Post créé avec succès, ID: ${post.id}');
+      if (result['success']) {
+        if (result['post'] != null) {
+          provider.setSuccess(result['post'] as PostModel);
+        } else {
+          provider.setSuccessNoPost();
         }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const CustomToast(
-              message: 'Offre publiée avec succès',
-              isSuccess: true,
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
-        );
-        await Future.delayed(const Duration(seconds: 2));
         if (context.mounted) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/home',
-                (route) => false,
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: CustomToast(
+                message: 'Offre publiée avec succès ✅',
+                isSuccess: true,
+                bgColor: AppColors.successGreen,
+              ),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
           );
+          await Future.delayed(const Duration(seconds: 2));
+          if (context.mounted) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/home',
+                  (route) => false,
+            );
+          }
         }
+      } else {
+        throw Exception('Création du post échouée');
       }
     } catch (e) {
-      provider.setError(e.toString().replaceFirst('Exception: ', ''));
+      final errorMessage = e.toString().replaceFirst('Exception: ', '');
+      provider.setError(errorMessage);
       if (context.mounted) {
         if (kDebugMode) {
-          print('PostController: Erreur: $e');
+          print('PostController: Erreur: $errorMessage');
         }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: CustomToast(
-              message: e.toString().replaceFirst('Exception: ', ''),
+              message: errorMessage,
               isSuccess: false,
+              bgColor: AppColors.errorRed,
             ),
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.transparent,

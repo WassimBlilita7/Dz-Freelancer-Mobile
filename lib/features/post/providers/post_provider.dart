@@ -30,6 +30,13 @@ class PostProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setSuccessNoPost() {
+    _post = null;
+    _errorMessage = null;
+    _isLoading = false;
+    notifyListeners();
+  }
+
   void clear() {
     _isLoading = false;
     _errorMessage = null;
