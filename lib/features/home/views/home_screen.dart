@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
     HomeTab(),
     PostListScreen(), // Remplacé ChartTab par PostListScreen
     UserTab(),
-    NotificationsTab(),
+    SearchTab(),
   ];
 
   @override

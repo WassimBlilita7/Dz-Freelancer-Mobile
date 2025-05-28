@@ -5,23 +5,21 @@ import 'package:provider/provider.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/custom_card.dart';
-
 import '../providers/ost_list_provider.dart';
 
-class PostListScreen extends StatefulWidget {
-  const PostListScreen({super.key});
+class SearchPostScreen extends StatefulWidget {
+  const SearchPostScreen({super.key});
 
   @override
-  State<PostListScreen> createState() => _PostListScreenState();
+  State<SearchPostScreen> createState() => _SearchPostScreenState();
 }
 
-class _PostListScreenState extends State<PostListScreen> {
+class _SearchPostScreenState extends State<SearchPostScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    // Appeler fetchPosts après le premier build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = Provider.of<PostListProvider>(context, listen: false);
       provider.controller?.fetchPosts(context);
@@ -41,7 +39,7 @@ class _PostListScreenState extends State<PostListScreen> {
         return Scaffold(
           backgroundColor: AppColors.getBackground(context),
           appBar: AppBar(
-            title: Text('Offres', style: AppTextStyles.titleLarge(context)),
+            title: Text('Recherche Offres', style: AppTextStyles.titleLarge(context)),
             backgroundColor: AppColors.getBackground(context),
             elevation: 0,
             bottom: PreferredSize(
@@ -73,49 +71,49 @@ class _PostListScreenState extends State<PostListScreen> {
           ),
           body: provider.isLoading
               ? Center(
-            child: CircularProgressIndicator(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          )
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                )
               : provider.error != null
-              ? Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  provider.error!,
-                  style: AppTextStyles.bodyText(context).copyWith(color: Colors.red),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 16.h),
-                ElevatedButton(
-                  onPressed: () => provider.controller?.fetchPosts(context),
-                  child: Text('Réessayer', style: AppTextStyles.bodyText(context)),
-                ),
-              ],
-            ),
-          )
-              : provider.posts.isEmpty
-              ? Center(
-            child: Text(
-              'Aucune offre disponible',
-              style: AppTextStyles.bodyText(context),
-            ),
-          )
-              : ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-            itemCount: provider.posts.length,
-            separatorBuilder: (context, index) => SizedBox(height: 8.h),
-            itemBuilder: (context, index) {
-              final post = provider.posts[index];
-              return CustomCard(
-                post: post,
-                index: index,
-              );
-            },
-          ),
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            provider.error!,
+                            style: AppTextStyles.bodyText(context).copyWith(color: Colors.red),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 16.h),
+                          ElevatedButton(
+                            onPressed: () => provider.controller?.fetchPosts(context),
+                            child: Text('Réessayer', style: AppTextStyles.bodyText(context)),
+                          ),
+                        ],
+                      ),
+                    )
+                  : provider.posts.isEmpty
+                      ? Center(
+                          child: Text(
+                            'Aucune offre disponible',
+                            style: AppTextStyles.bodyText(context),
+                          ),
+                        )
+                      : ListView.separated(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                          itemCount: provider.posts.length,
+                          separatorBuilder: (context, index) => SizedBox(height: 8.h),
+                          itemBuilder: (context, index) {
+                            final post = provider.posts[index];
+                            return CustomCard(
+                              post: post,
+                              index: index,
+                            );
+                          },
+                        ),
         );
       },
     );
   }
-}
+} 

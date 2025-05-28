@@ -5,6 +5,7 @@ import 'package:wassit_freelancer_dz_flutter/features/post/models/post_model.dar
 class PostListProvider with ChangeNotifier {
   PostListController? controller; // Rendu nullable, supprimé late
   List<PostModel> _posts = [];
+  List<PostModel> _allPosts = [];
   bool _isLoading = false;
   String? _error;
 
@@ -16,6 +17,7 @@ class PostListProvider with ChangeNotifier {
 
   void setPosts(List<PostModel> posts) {
     _posts = posts;
+    _allPosts = List.from(posts);
     _error = null;
     notifyListeners();
   }
@@ -28,6 +30,20 @@ class PostListProvider with ChangeNotifier {
   void setError(String? error) {
     _error = error;
     _isLoading = false;
+    notifyListeners();
+  }
+
+  void filterPosts(String query) {
+    if (query.isEmpty) {
+      _posts = List.from(_allPosts);
+    } else {
+      final lowerQuery = query.toLowerCase();
+      _posts = _allPosts.where((post) =>
+        post.title.toLowerCase().contains(lowerQuery) ||
+        post.description.toLowerCase().contains(lowerQuery) ||
+        post.skillsRequired.any((skill) => skill.toLowerCase().contains(lowerQuery))
+      ).toList();
+    }
     notifyListeners();
   }
 }

@@ -44,6 +44,7 @@ class PostController {
           ),
         );
       }
+      provider.setLoading(false); // S'assurer que le loading s'arrête
       return;
     }
 
@@ -79,7 +80,7 @@ class PostController {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: CustomToast(
-                message: 'Offre publiée avec succès ✅',
+                message:'Offre publiée avec succès ✅',
                 isSuccess: true,
                 bgColor: AppColors.successGreen,
               ),
@@ -88,6 +89,7 @@ class PostController {
               elevation: 0,
             ),
           );
+          // Garder le loading jusqu'à ce que le toast soit affiché
           await Future.delayed(const Duration(seconds: 2));
           if (context.mounted) {
             Navigator.pushNamedAndRemoveUntil(
@@ -121,6 +123,8 @@ class PostController {
         );
       }
     } finally {
+      // Déplacer setLoading(false) après le toast pour garantir que le loading persiste
+      await Future.delayed(const Duration(milliseconds: 500)); // Petit délai pour l'affichage du toast
       provider.setLoading(false);
       if (kDebugMode) {
         print('PostController: Fin de createPost, isLoading: ${provider.isLoading}');
