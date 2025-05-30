@@ -4,6 +4,7 @@ import 'package:wassit_freelancer_dz_flutter/constants/app_colors.dart';
 import 'package:wassit_freelancer_dz_flutter/constants/app_text_styles.dart';
 import 'package:wassit_freelancer_dz_flutter/core/widgets/theme_toggle_button.dart';
 import 'package:wassit_freelancer_dz_flutter/core/utils/navigate_to_profile.dart'; // Import de la fonction
+import 'package:wassit_freelancer_dz_flutter/features/settings/views/settings_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   final VoidCallback onLogout;
@@ -69,7 +70,12 @@ class CustomDrawer extends StatelessWidget {
                     color: AppColors.getText(context),
                   ),
                 ),
-                onTap: () => _handleNavigation(context),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                  );
+                },
               ),
               const Spacer(),
               ListTile(

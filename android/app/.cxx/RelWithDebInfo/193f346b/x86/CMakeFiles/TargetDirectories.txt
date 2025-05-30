@@ -1,0 +1,2 @@
+D:/WASSIM/wassit_freelancer_dz/android/app/.cxx/RelWithDebInfo/193f346b/x86/CMakeFiles/edit_cache.dir
+D:/WASSIM/wassit_freelancer_dz/android/app/.cxx/RelWithDebInfo/193f346b/x86/CMakeFiles/rebuild_cache.dir
